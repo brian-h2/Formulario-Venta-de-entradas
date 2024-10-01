@@ -8,6 +8,7 @@ function App() {
     <>
       <RegisterPage/>
       <LoginPage/>
+      <h1 class="bg-red">Bienvenido a la aplicacion</h1>
     </>
   )
 }
