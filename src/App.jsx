@@ -1,10 +1,13 @@
 import './App.css'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 
 function App() {
 
   return (
     <>
-      <h1 class="bg red">Hola mundo</h1>
+      <RegisterPage/>
+      <LoginPage/>
     </>
   )
 }
