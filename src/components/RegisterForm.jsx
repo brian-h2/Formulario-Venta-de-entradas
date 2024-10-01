@@ -3,9 +3,11 @@ import InputField from './InputField'
 const RegisterForm = () => {
 
   const [formData, setFormData] = useState({
+    name:'',
     username: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: '',
   })
 
   const handleChange = (e) => {
@@ -21,33 +23,47 @@ const RegisterForm = () => {
 
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-4'>
-      <InputField
-      label="Nombre usuario"
-      type="text"
-      name="username"
-      value={formData.username}
-      onChange={handleChange}
-      placeHolder="Nombre usuario"
-      />
-      <InputField
-        label="Contraseña"
-        type="password"
-        name="password"
-        value={formData.password}
+      <form onSubmit={handleSubmit} className='space-y-4'>
+        <InputField
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Your Name"
+        />
+        <InputField
+        label="Nombre usuario"
+        type="text"
+        name="username"
+        value={formData.username}
         onChange={handleChange}
-        placeholder="Contraseña"
-      />
-       <InputField
-        label="Correo Electrónico"
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="Correo electrónico"
-      />
-
-    <button type="submit" className="btn ">Registarse</button>
+        placeHolder="Nombre usuario"
+        />
+        <InputField
+          label="Correo Electrónico"
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Correo electrónico"
+        />
+        <InputField
+          label="Contraseña"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Contraseña"
+        />
+        <InputField
+          label="Contraseña"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Contraseña"
+        />
+    <button type="submit" class="btn btn-primary">Registarse</button>
     </form>
   )
 }
