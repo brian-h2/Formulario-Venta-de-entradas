@@ -1,8 +1,13 @@
-# React + Vite
+### Formulario de registro e inicio de sesion para una pagina de venta de entradas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+###### Descripcion: El cliente requiere dos formularios donde los datos de los mismos sean enviados a una base de datos para realizar compras por mercado pago.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-- Funciones
+    
+    - Creacion del formulario de registro para almacenar nuevos usuarios que quieran comprar entradas, estos nos permitira mantener un historial de comprados y sus datos, sin ningun divulgacion.
+
+    - Creacion del formulario iniciar sesion, permitiria al usuario colocar su nombre y contraseña para ingresa a la pagina y ver su historial de compras
+
+    - Comunicacion con backend y base de datos, lo que el cliente requiera (BBDD desplegada o en la nube ya sea SQL o no SQL)
