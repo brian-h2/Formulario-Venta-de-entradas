@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import InputField from './InputField'
-import img from '../assets/user.svg'
 
 const RegisterForm = () => {
 
@@ -27,7 +26,7 @@ const RegisterForm = () => {
   return (
       <form onSubmit={handleSubmit} className='space-y-4'>
         <InputField
-          img = {img}
+          img = '/register/user.svg'
           type="text"
           name="name"
           value={formData.name}
@@ -35,7 +34,7 @@ const RegisterForm = () => {
           placeHolder="Nombre"
         />
         <InputField
-
+          img = '/register/username.svg'
           type="text"
           name="username"
           value={formData.username}
@@ -43,6 +42,7 @@ const RegisterForm = () => {
           placeHolder="Usuario"
         />
         <InputField
+          img = '/register/email.svg'
           type="email"
           name="email"
           value={formData.email}
@@ -50,6 +50,7 @@ const RegisterForm = () => {
           placeHolder="Correo electrónico"
         />
         <InputField
+          img = '/register/password.svg'
           type="password"
           name="password"
           value={formData.password}
@@ -57,6 +58,7 @@ const RegisterForm = () => {
           placeHolder="Contraseña"
         />
         <InputField
+          img = '/register/password.svg'
           type="password"
           name="password"
           value={formData.password}
