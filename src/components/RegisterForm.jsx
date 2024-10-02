@@ -29,39 +29,35 @@ const RegisterForm = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder="Your Name"
+          placeHolder="Nombre"
         />
         <InputField
-        label="Nombre usuario"
         type="text"
         name="username"
         value={formData.username}
         onChange={handleChange}
-        placeHolder="Nombre usuario"
+        placeHolder="Usuario"
         />
         <InputField
-          label="Correo Electrónico"
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="Correo electrónico"
+          placeHolder="Correo electrónico"
         />
         <InputField
-          label="Contraseña"
           type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
-          placeholder="Contraseña"
+          placeHolder="Contraseña"
         />
         <InputField
-          label="Contraseña"
           type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
-          placeholder="Contraseña"
+          placeHolder="Confirmar Contraseña"
         />
     <button type="submit" class="btn btn-primary">Registarse</button>
     </form>
