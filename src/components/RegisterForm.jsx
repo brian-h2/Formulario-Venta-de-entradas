@@ -65,7 +65,7 @@ const RegisterForm = () => {
           onChange={handleChange}
           placeHolder="Confirmar Contraseña"
         />
-    <button type="submit" class="flex w-full justify-center rounded-lg bg-green-ligth px-3 py-1.5 text-sm font-bold leading-6 text-white shadow-sm">Registarse</button>
+    <button type="submit" class="flex w-full max-w-64	m-auto justify-center rounded-lg bg-green-ligth px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm">Registarse</button>
     </form>
   )
 }
