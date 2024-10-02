@@ -1,10 +1,11 @@
 import React from 'react'
 
-const InputField = ({type,name,value,onChange,placeHolder}) => {
+const InputField = ({img,type,name,value,onChange,placeHolder}) => {
   return (
-    <div className="mb-4">
+    <div className="mb-4 px-5">
+        {img && <img src={img} alt="icon" class="w-10 absolute pt-3 py-1 px-2" />}
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id={name}
           type={type}
           name={name}

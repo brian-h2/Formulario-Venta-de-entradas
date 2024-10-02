@@ -5,9 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    borderRadius: {
-      'lg': '30px',
-    },
+    extend: {
+      borderRadius: {
+        'lg': '30px',
+      },
+      colors: {
+        'green-ligth': '#37D493'
+      }
+    }
+   
   },
   plugins: [],
 }
