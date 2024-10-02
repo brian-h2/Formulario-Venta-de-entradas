@@ -7,8 +7,8 @@ function App() {
   return (
     <>
       <RegisterPage/>
-      <LoginPage/>
-      <h1 class="bg-red">Bienvenido a la aplicacion</h1>
+      {/* <LoginPage/>
+      <h1 class="bg-red">Bienvenido a la aplicacion</h1> */}
     </>
   )
 }
