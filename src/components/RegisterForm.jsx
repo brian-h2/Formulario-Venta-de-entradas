@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import InputField from './InputField'
 import zodConfirmation from '../utilities/zod'
+import Swal from 'sweetalert2'
+
 
 const RegisterForm = () => {
 
@@ -21,11 +23,23 @@ const RegisterForm = () => {
     e.preventDefault()
     let validation = zodConfirmation(formData)
     if(validation.success) {
-      alert('Registro exitoso' + validation.data.message)
+      alert('Registro exitoso')
     } else {
         validation.error.errors.forEach(err => {
-        alert(err.message)
-        
+            Swal.fire({
+              title: 'Error!',
+              text: err.message,
+              color: "#2B0A52",
+              position: 'top',
+              timer: 2500,
+              timerProgressBar: true,
+              icon: 'error',
+              confirmButtonText: 'OK',
+              confirmButtonColor: "#2B0A52",
+              background: 'white',
+              width: '20rem',
+            })
+
       })
     }
   }
