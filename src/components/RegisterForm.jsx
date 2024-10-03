@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import InputField from './InputField'
+import zodConfirmation from '../utilities/zod'
 
 const RegisterForm = () => {
 
@@ -8,7 +9,7 @@ const RegisterForm = () => {
     username: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    confirmPassword: ''
   })
 
   const handleChange = (e) => {
@@ -18,13 +19,19 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
+    let validation = zodConfirmation(formData)
+    if(validation.success) {
+      alert('Registro exitoso' + validation.data.message)
+    } else {
+        validation.error.errors.forEach(err => {
+        alert(err.message)
+        
+      })
+    }
   }
 
-
-
   return (
-      <form onSubmit={handleSubmit} className='space-y-4 h-full'>
+      <form onSubmit={handleSubmit} className='space-y-4 mb-10 h-full'>
         <InputField
           img = '/register/user.svg'
           type="text"
@@ -60,12 +67,12 @@ const RegisterForm = () => {
         <InputField
           img = '/register/password.svg'
           type="password"
-          name="password"
-          value={formData.password}
+          name="password confirmation"
+          value={formData.confirmPassword}
           onChange={handleChange}
           placeHolder="Confirmar Contraseña"
         />
-      <button type="submit" className="flex w-full max-w-64 mt-[10px] mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm">Registarse</button>
+      <button type="submit" className="flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm">Registarse</button>
     </form>
   )
 }
