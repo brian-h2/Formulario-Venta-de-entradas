@@ -24,7 +24,7 @@ const RegisterForm = () => {
 
 
   return (
-      <form onSubmit={handleSubmit} className='space-y-4'>
+      <form onSubmit={handleSubmit} className='space-y-4 h-full'>
         <InputField
           img = '/register/user.svg'
           type="text"
@@ -65,7 +65,7 @@ const RegisterForm = () => {
           onChange={handleChange}
           placeHolder="Confirmar Contraseña"
         />
-    <button type="submit" class="flex w-full max-w-64	m-auto justify-center rounded-lg bg-green-ligth px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm">Registarse</button>
+      <button type="submit" className="flex w-full max-w-64 mt-[10px] mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm">Registarse</button>
     </form>
   )
 }
