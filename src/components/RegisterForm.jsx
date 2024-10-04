@@ -91,6 +91,7 @@ const RegisterForm = () => {
           placeHolder="Confirmar Contraseña"
         />
       <button type="submit" className="flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm">Registarse</button>
+      <button type="submit" className="flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm">Registarse</button>
     </form>
   )
 }

@@ -1,14 +1,29 @@
+import { useEffect } from 'react';
 import './App.css'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import { createBrowserRouter, RouterProvider } from "react-router-dom"; 
 
 function App() {
 
+  useEffect(() => {
+    router.navigate('/login');
+  },[])
+
+  const router = createBrowserRouter([
+    {
+      path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/register",
+      element: <RegisterPage />,
+    }
+  ])
+
   return (
     <>
-      <RegisterPage/>
-      {/* <LoginPage/>
-      <h1 class="bg-red">Bienvenido a la aplicacion</h1> */}
+      <RouterProvider router={router} />
     </>
   )
 }
