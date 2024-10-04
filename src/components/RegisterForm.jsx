@@ -99,9 +99,11 @@ const RegisterForm = () => {
           onChange={handleChange}
           placeHolder="Confirmar Contraseña"
         />
-      <button type="submit" className="transition-all duration-300 ease-in-out flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm hover:bg-violet-600  hover:duration-150">Registarse</button>
-      <button type="submit" className="transition-all duration-300 ease-in-out flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm hover:bg-violet-600  hover:duration-150"> 
-        <Link to='/'>Iniciar Sesion</Link>
+      <button type="submit" className="transition-all duration-300 ease-in-out flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg py-1.5 text-lg font-medium leading-6 text-white shadow-sm hover:bg-violet-600  hover:duration-150">Registarse</button>
+      <button className="transition-all duration-300 ease-in-out flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg py-1.5 text-lg font-medium leading-6 text-white shadow-sm hover:bg-violet-600  hover:duration-150"> 
+        <Link to='/' className="w-full h-full flex justify-center items-center">
+          Iniciar Sesion
+        </Link>
       </button>
     </form>
   )
