@@ -2,6 +2,7 @@ import React from 'react'
 import LoginForm from '../components/LoginForm'
 
 const LoginPage = () => {
+
   return (
     <div className="min-h-screen overscroll-none bg-gradient-to-r from-[#2B0A52] via-[#6A0B67] to-[#B32E71] flex items-center justify-center ">
       <div className="bg-[#B32E71]/150 shadow-xl border-[1px]  border-pink-500 rounded-lg p-8 max-w-sm max-h-xl w-full m-2">

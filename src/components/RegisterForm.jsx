@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import InputField from './InputField'
 import zodConfirmation from '../utilities/schems/zod'
 import Swal from 'sweetalert2'
+import { Link } from 'react-router-dom'
 
 
 const RegisterForm = () => {
@@ -92,7 +93,9 @@ const RegisterForm = () => {
           placeHolder="Confirmar Contraseña"
         />
       <button type="submit" className="flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm">Registarse</button>
-      <button type="submit" className="flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm">Registarse</button>
+      <button type="submit" className="flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm"> 
+        <Link to='/'>Iniciar Sesion</Link>
+      </button>
     </form>
   )
 }

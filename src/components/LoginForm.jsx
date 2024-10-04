@@ -1,7 +1,10 @@
 import { useEffect,useState } from "react"
+import { Link } from "react-router-dom"
 
 
-const LoginForm = () => {
+const LoginForm = ({router}) => {
+
+    // console.log(router)
 
     const [formData, setFormData] = useState({
         email: '',
@@ -20,7 +23,7 @@ const LoginForm = () => {
 
 
   return (
-    <form className='space-y-4 mb-10 h-full'>
+    <form className='space-y-4 mb-5 h-full'>
         <img src="/register/email.svg" alt="email" className='w-10 absolute pt-6 py-1 px-2' />
         <input
          className='shadow appearance-none border rounded w-full py-2 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -43,6 +46,9 @@ const LoginForm = () => {
           placeholder='Contraseña'
         />
         <button type='submit' className='flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm' onClick={handleLogin}>Ingresar</button>
+        <button type='submit' className='flex w-full max-w-64 mt-[10px] h-full max-h-120 mx-auto justify-center border-2 border-[#B32E71] rounded-lg px-3 py-1.5 text-lg font-medium leading-6 text-white shadow-sm'>
+          <Link to='/register'>Registrarse</Link>
+        </button>
     </form>
   )
 }

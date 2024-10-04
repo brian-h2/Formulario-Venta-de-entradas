@@ -1,15 +1,14 @@
-import { useEffect } from 'react';
 import './App.css'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
-import { createBrowserRouter, RouterProvider } from "react-router-dom"; 
+import {createBrowserRouter,RouterProvider,} from "react-router-dom";
 
 function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/login",
-      element: <LoginPage />,
+      path: "/",
+      element: <LoginPage />
     },
     {
       path: "/register",
@@ -19,7 +18,10 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      <RouterProvider 
+      router={router} 
+      //  fallbackElement={<BigSpinner />}/>
+      />
     </>
   )
 }
