@@ -19,7 +19,7 @@ const zodConfirmation = (formData) => {
             .max(15, 'No exceda los 15 caracteres en la contraseña'),
     });
 
-    const result = schema.safeParse(formData);
+    const result = schema.partial().safeParse(formData);
     
     return result;
 };
