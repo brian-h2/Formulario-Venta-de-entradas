@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import InputField from './InputField'
-import zodConfirmation from '../utilities/zod'
+import zodConfirmation from '../utilities/schems/zod'
 import Swal from 'sweetalert2'
 
 
@@ -28,6 +28,7 @@ const RegisterForm = () => {
     let validation = zodConfirmation(formData)
     if(validation.success) {
       alert('Registro exitoso')
+      localStorage.setItem('Usuario', formData)
     } else {
         validation.error.errors.forEach(err => {
             Swal.fire({

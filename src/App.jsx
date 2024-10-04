@@ -6,10 +6,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
 
-  useEffect(() => {
-    router.navigate('/login');
-  },[])
-
   const router = createBrowserRouter([
     {
       path: "/login",
