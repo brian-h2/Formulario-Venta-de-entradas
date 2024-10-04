@@ -11,7 +11,7 @@ const RegisterForm = () => {
     username: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   })
 
   const handleChange = (e) => {
@@ -21,6 +21,10 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if(formData.password != formData.confirmPassword) {
+      alert('Las contraseas no coinciden')
+      return
+    }
     let validation = zodConfirmation(formData)
     if(validation.success) {
       alert('Registro exitoso')
@@ -81,7 +85,7 @@ const RegisterForm = () => {
         <InputField
           img = '/register/password.svg'
           type="password"
-          name="password confirmation"
+          name="confirmPassword"
           value={formData.confirmPassword}
           onChange={handleChange}
           placeHolder="Confirmar Contraseña"
