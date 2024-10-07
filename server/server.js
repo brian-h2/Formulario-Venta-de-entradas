@@ -14,12 +14,8 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
    console.log(req.body)
-    
-    res.status(200).json('Recibido');
+   res.status(200).json('Recibido');
 })
-
-
-
 
 
 app.listen(port , () => {
