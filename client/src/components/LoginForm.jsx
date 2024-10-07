@@ -46,13 +46,13 @@ const LoginForm = () => {
         setLoginData({...loginData, [name]: value })
     }
 
+  
+  // },[loginTrigger,loginData]);
   useEffect(() => {
     const conexionApi = async () => {
-      if(loginTrigger) {
+      if(loginTrigger == true) {
         try {
-          const res = await axios.post('http://localhost:5000/login', {
-            loginData, 
-          });
+          const res = await axios.post('http://localhost:5000', loginData);
           setMensaje(res.data);
         } catch (error) {
           setMensaje(error.response.data);
@@ -60,10 +60,8 @@ const LoginForm = () => {
       }
       setLoginTrigger(false);
     }
-
     conexionApi();
-  
-  },[loginTrigger,loginData]);
+  }, [loginTrigger,loginData]);
 
 
   return (
