@@ -1,7 +1,8 @@
-import {useState } from "react"
+import {useEffect,useState } from "react"
 import { Link } from "react-router-dom"
 import zodConfirmation from "../utilities/schems/zod"
 import Swal from 'sweetalert2'
+import axios from 'axios'
 
 const LoginForm = () => {
 
@@ -10,13 +11,15 @@ const LoginForm = () => {
         password: '',
     })
 
+    const [mensaje,setMensaje] = useState('')
+    const [loginTrigger, setLoginTrigger] = useState(false)
+
+
     const handleLogin = (e) => {
         e.preventDefault()
        let validation = zodConfirmation(loginData)
        if(validation.success) {
-        // Simulando la redirección
-        alert('Inicio de sesion exitoso')
-        // localStorage.setItem('Usuario', loginData)
+        setLoginTrigger(true);
       } else {
           validation.error.errors.forEach(err => {
               Swal.fire({
@@ -34,6 +37,7 @@ const LoginForm = () => {
               })
   
         })
+        setLoginTrigger(false);
       }
     }
 
@@ -41,6 +45,25 @@ const LoginForm = () => {
         const {name,value} = e.target
         setLoginData({...loginData, [name]: value })
     }
+
+  useEffect(() => {
+    const conexionApi = async () => {
+      if(loginTrigger) {
+        try {
+          const res = await axios.post('http://localhost:5000/login', {
+            loginData, 
+          });
+          setMensaje(res.data);
+        } catch (error) {
+          setMensaje(error.response.data);
+        }
+      }
+      setLoginTrigger(false);
+    }
+
+    conexionApi();
+  
+  },[loginTrigger,loginData]);
 
 
   return (

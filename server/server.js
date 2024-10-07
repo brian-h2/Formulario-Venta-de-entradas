@@ -10,6 +10,13 @@ app.get('/', (req, res) => {
     console.log('Hola mundo')
 })
 
+app.post('/', (req, res) => {
+    console.log(req.body);
+
+})
+
+
+
 
 app.listen(port , () => {
     console.log(`Server running on port ${port}`);

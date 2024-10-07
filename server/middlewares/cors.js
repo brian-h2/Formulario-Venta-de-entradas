@@ -4,6 +4,8 @@ export const corsMiddleware = () => cors({
     origin: (origin,callback) => {
         const acceptedOrigin = [
             "http://localhost:5173/",
+            "http://localhost:5173",
+
         ]
         if (acceptedOrigin.includes(origin)) {
             return callback(null, true);
