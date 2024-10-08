@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect,useState } from 'react'
 import InputField from './InputField'
 import zodConfirmation from '../utilities/schems/zod'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 
 const RegisterForm = () => {
@@ -15,6 +16,9 @@ const RegisterForm = () => {
     confirmPassword: '',
   })
 
+  const [loginTrigger, setLoginTrigger] = useState(false);
+  const [message, setMessage] = useState('');
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({...formData, [name]: value })
@@ -24,19 +28,20 @@ const RegisterForm = () => {
     e.preventDefault()
     if(formData.password != formData.confirmPassword) {
       alert('Las contraseas no coinciden')
+      setLoginTrigger(false);
       return
     }
     let validation = zodConfirmation(formData)
     if(validation.success) {
       alert('Registro exitoso')
-      localStorage.setItem('Usuario', formData)
-      setFormData({
-        name:'',
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      })
+      setLoginTrigger(true);
+      // setFormData({
+      //   name:'',
+      //   username: '',
+      //   email: '',
+      //   password: '',
+      //   confirmPassword: '',
+      // })
     } else {
         validation.error.errors.forEach(err => {
             Swal.fire({
@@ -56,6 +61,27 @@ const RegisterForm = () => {
       })
     }
   }
+
+  useEffect(() => {
+    const conexionApi = async () => {
+      if(loginTrigger == true) {
+        try {
+          const res = await axios.post('http://localhost:5000/register', {
+            email: formData.email,
+            password: formData.password,
+            name: formData.name,
+            username: formData.username,
+          });
+          setMessage(res.data);
+          console.log(message);
+        } catch (error) {
+          setMessage(error.response);
+        }
+      }
+      setLoginTrigger(false);
+    }
+    conexionApi();
+  }, [loginTrigger,formData]);
 
   return (
       <form onSubmit={handleSubmit} className='space-y-4 mb-10 h-full'>

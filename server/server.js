@@ -13,8 +13,13 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-   console.log(req.body)
-   res.status(200).json('Recibido');
+   console.log(req.body);
+})
+
+app.post('/register', (req, res) => {
+    console.log('hola')
+    console.log(req.body);
+    res.status(200).json(req.body);
 })
 
 
