@@ -35,13 +35,6 @@ const RegisterForm = () => {
     if(validation.success) {
       alert('Registro exitoso')
       setLoginTrigger(true);
-      // setFormData({
-      //   name:'',
-      //   username: '',
-      //   email: '',
-      //   password: '',
-      //   confirmPassword: '',
-      // })
     } else {
         validation.error.errors.forEach(err => {
             Swal.fire({
