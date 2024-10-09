@@ -1,0 +1,13 @@
+{
+    "build": {
+      "commands": [
+        "cd server && npm install && npm run build", 
+        "cd client && npm install && npm run build"  
+      ]
+    },
+    "start": {
+      "commands": [
+        "cd server && npm start" 
+      ]
+    }
+  }
