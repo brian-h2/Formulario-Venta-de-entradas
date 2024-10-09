@@ -27,30 +27,51 @@ const connection = await mysql.createConnection(config);
 
 
 
-app.get('/', (req, res) => {
-  res.status(200).send('Server is up and running!');
-});
+app.get('/usuarios', async (req, res) => {
+  const query = 'SELECT * FROM users'
+
+  try {
+    const result = await connection.query(query);
+    res.json(result[0]);
+  } catch (error) {
+    res.status(500).send('Error al obtener los usuarios');
+  }
+})
+
+app.post('/login'), async (req, res) => {
+  const { email, password } = req.body;
+
+  const query = 'SELECT * FROM users WHERE email =?'
+  const values = [email];
+
+  try {
+    const result = await connection.query(query, values);
+    if(result[0] === email) {
+      res.status(400).send('Logueado correctamente');
+    } else {
+      res.status(401).send('Usuario o contraseña incorrectos');
+    }
+  }
+  catch (error) {
+    res.status(500).send('Error al verificar el usuario');
+  }
+}
 
 
-app.post('/register', (req, res) => {
 
-  console.log(req.body)
+app.post('/register', async (req, res) => {
 
-  // const { email, password, name, username } = req.body;
-  
-  // //Crear consulta para agregar el usuario
+  const { email, password, name, username } = req.body;
 
-  // const query = 'INSERT INTO users (email, password, name, username) VALUES (?,?,?,?)';
-  // const values = [email, password, name, username];
+  const query = 'INSERT INTO users (email, password, name, username) VALUES (?,?,?,?)';
+  const values = [email, password, name, username];
 
-  // try {
-  //   const result = await connection.query(query, values);
-  //   console.log(result);
-  //   res.status(201).send('Usuario creado exitosamente!');
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).send('Error al crear el usuario');
-  // }
+  try {
+    const result = await connection.query(query, values);
+    res.status(201).send('Usuario creado exitosamente!');
+  } catch (error) {
+    res.status(500).send('Error al crear el usuario');
+  }
 
 })
 

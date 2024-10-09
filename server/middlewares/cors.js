@@ -5,8 +5,7 @@ export const corsMiddleware = () => cors({
         const acceptedOrigins = [
             "http://localhost:5173", // Cambia este puerto si es necesario
             "http://127.0.0.1:5173", // También puedes incluir esta variante
-            "http://localhost:5000",
-            "*", // Permitir cualquier origen (para pruebas)
+            "http://localhost:5000", 
         ];
         
         // Aceptar solicitudes sin origen (como localhost)

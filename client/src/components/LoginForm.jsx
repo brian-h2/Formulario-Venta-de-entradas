@@ -52,7 +52,7 @@ const LoginForm = () => {
     const conexionApi = async () => {
       if(loginTrigger == true) {
         try {
-          const res = await axios.post('http://localhost:5000', {
+          const res = await axios.post('http://localhost:5000/login', {
             email: loginData.email,
             password: loginData.password,
           });
