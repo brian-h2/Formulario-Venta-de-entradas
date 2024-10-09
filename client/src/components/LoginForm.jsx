@@ -52,14 +52,13 @@ const LoginForm = () => {
     const conexionApi = async () => {
       if(loginTrigger == true) {
         try {
-          const res = await axios.post('http://localhost:5000/login', {
+          const res = await axios.post('http://localhost:5000', {
             email: loginData.email,
             password: loginData.password,
           });
-          setMensaje(res.data);
-          console.log(mensaje);
+          alert(res.data)
         } catch (error) {
-          setMensaje(error.response.data);
+          alert(error);
         }
       }
       setLoginTrigger(false);

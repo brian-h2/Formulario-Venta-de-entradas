@@ -38,24 +38,31 @@ app.get('/usuarios', async (req, res) => {
   }
 })
 
-app.post('/login'), async (req, res) => {
+
+app.post('/', async (req, res) => {
   const { email, password } = req.body;
 
-  const query = 'SELECT * FROM users WHERE email =?'
-  const values = [email];
+  const query = 'SELECT email, password FROM users WHERE email = ?';
+  const values = [email]; // Solo pasamos el email a la consulta
 
   try {
-    const result = await connection.query(query, values);
-    if(result[0] === email) {
-      res.status(400).send('Logueado correctamente');
-    } else {
-      res.status(401).send('Usuario o contraseña incorrectos');
-    }
+    const [result] = await connection.query(query, values); // Ejecutamos la consulta
+
+      const user = result[0]; // Obtenemos el primer resultado
+
+      // Comparar la contraseña almacenada con la ingresada
+      if (user.password === password && user.email === email) { // Aquí puedes usar bcrypt.compare en producción
+        res.status(200).send('Logueado correctamente'); // Cambié a 200 para indicar éxito
+      } else {
+        res.status(401).send('Email o contraseña incorrectos'); // Respuesta para contraseñas incorrectas
+      }
+  
+  } catch (error) {
+    console.error('Error en la consulta:', error); // Agrega logging para errores
+    res.status(500).json({ data: 'Error en el servidor' }); // Respuesta en caso de error
   }
-  catch (error) {
-    res.status(500).send('Error al verificar el usuario');
-  }
-}
+});
+
 
 
 
@@ -67,7 +74,7 @@ app.post('/register', async (req, res) => {
   const values = [email, password, name, username];
 
   try {
-    const result = await connection.query(query, values);
+    await connection.query(query, values);
     res.status(201).send('Usuario creado exitosamente!');
   } catch (error) {
     res.status(500).send('Error al crear el usuario');
