@@ -1,14 +1,14 @@
 {
-  "build": [
-    {
+  "build": {
+    "client": {
       "dir": "client",
       "cmd": "npm install && npm run build"
     },
-    {
+    "server": {
       "dir": "server",
       "cmd": "npm install"
     }
-  ],
+  },
   "start": {
     "cmd": "node server/index.js"
   }
