@@ -57,7 +57,7 @@ const RegisterForm = () => {
 
   useEffect(() => {
     const conexionApi = async () => {
-      if(loginTrigger == true) {
+      if (loginTrigger === true) {
         try {
           const res = await axios.post('http://localhost:5000/register', {
             email: formData.email,
@@ -66,16 +66,18 @@ const RegisterForm = () => {
             username: formData.username,
           });
           setMessage(res.data);
-          console.log(message);
+          console.log(res.data); // Imprime la respuesta directamente
         } catch (error) {
-          setMessage(error.response);
+          console.error(error); // Muestra el error completo para depuración
+          setMessage(error.response ? error.response.data : "Error de conexión");
         }
       }
       setLoginTrigger(false);
-    }
+    };
+  
     conexionApi();
-  }, [loginTrigger,formData]);
-
+  }, [loginTrigger, formData]);
+  
   return (
       <form onSubmit={handleSubmit} className='space-y-4 mb-10 h-full'>
         <InputField
