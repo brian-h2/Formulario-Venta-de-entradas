@@ -10,6 +10,7 @@
     }
   },
   "start": {
-    "cmd": "node server/index.js"
+    "cmd": "npm run start",
+    "dir": "server"
   }
 }
