@@ -27,7 +27,7 @@ const config = {
 };
 
 
-const connection = await mysql.createConnection(config);
+const connection = await mysql.createConnection(dbUrl);
 
 
 app.get('/', (req, res) => {
