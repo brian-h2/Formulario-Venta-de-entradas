@@ -23,7 +23,7 @@ const config = {
   user: process.env.DB_USER, // Cambia a tu variable de entorno para el usuario
   password: process.env.DB_PASSWORD, // Cambia a tu variable de entorno para la contraseña
   database: process.env.DB_NAME, // Cambia a tu variable de entorno para el nombre de la base de datos
-  port: process.env.DB_PORT,
+  port: process.env.DB_PORT, // Cambia a tu variable de entorno para
 }
 
 const connection = await mysql.createConnection(config);
