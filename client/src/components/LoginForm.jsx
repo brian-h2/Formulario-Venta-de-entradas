@@ -47,16 +47,21 @@ const LoginForm = () => {
         setLoginData({...loginData, [name]: value })
     }
     
-    const redirectToGoogleSites = () => {
-      const email = localStorage.getItem('username'); // Obtiene el email del localStorage
-      if (email) {
-        // Pasa el email a Google Sites en la URL
-        const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/perfil?email=${encodeURIComponent(email)}`;
-
-        location.href = googleSitesUrl; // Redirige a Google Sites con el email en la URL
-      } else {
-        alert("No se encontró el email del usuario.");
-      }
+    const redirectToGoogleSites = (email) => {
+      // Construir la URL con el email codificado
+      const googleAppsScriptUrl = `https://script.google.com/macros/s/AKfycbyCX8MPIDLam1Ew9c6K5eFqnFOeOD0zo5O_46kmgzLE39LjsUAiDssJf1txdPXPAGGe/exec?email=${encodeURIComponent(email)}`;
+      
+      // Hacer una solicitud GET a Google Apps Script con el email
+      fetch(googleAppsScriptUrl)
+        .then(response => response.text())
+        .then(data => {
+          console.log('Respuesta de Google Apps Script:', data);
+          // Aquí podrías redirigir al sitio de Google Sites
+          window.location.href = `https://sites.google.com/view/qrentradadigital/perfil?authuser=0&email=${encodeURIComponent(email)}`;
+        })
+        .catch(error => {
+          console.error('Error al enviar el email a Google Apps Script:', error);
+        });
     };
     
 
@@ -71,7 +76,7 @@ const LoginForm = () => {
           });
           localStorage.setItem('username', loginData.email);
           alert(res.data)
-          redirectToGoogleSites()
+          redirectToGoogleSites(loginData.email)
           // location.href = 'https://sites.google.com/view/qrentradadigital/'
         } catch (error) {
           alert(error);
