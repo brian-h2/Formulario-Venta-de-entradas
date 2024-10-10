@@ -33,6 +33,29 @@ app.get('/', (req, res) => {
   res.send('API RESTful - Formulario de Registro');
 })
 
+app.get('/user', (req, res) => {
+  const email = req.query.email; // Obtener el email del usuario de la consulta
+    
+  if (!email) {
+      return res.status(400).json({ message: "Se requiere un email" });
+  }
+  
+  // Consulta a la base de datos
+  connection.query('SELECT username FROM UsuariosRegister WHERE email = ?', [email], (err, results) => {
+      if (err) {
+          console.error('Error en la consulta:', err);
+          return res.status(500).json({ message: "Error en la consulta" });
+      }
+      
+      if (results.length > 0) {
+          return res.json({ username: results[0].username });
+      } else {
+          return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+  });
+
+})
+
 app.get('/usuarios', async (req, res) => {
   const query = 'SELECT * FROM UsuariosRegister'
 
