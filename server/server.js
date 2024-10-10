@@ -33,8 +33,6 @@ app.get('/', (req, res) => {
   res.send('API RESTful - Formulario de Registro');
 })
 
-let name;
-
 app.get('/user', async (req, res) => {
   const email = req.query.email; 
     
@@ -79,8 +77,7 @@ app.post('/', async (req, res) => {
 
       // Comparar la contraseña almacenada con la ingresada
       if (user.password == password && user.email == email) { // Aquí puedes usar bcrypt.compare en producción
-        res.status(200).send('Logueado correctamente'); // Cambié a 200 para indicar éxito
-        name = user.nombre; // Asignamos el nombre al usuario para el mensaje de bienvenida
+        res.status(200).send('Logueado correctamente'); 
       } else {
         res.status(401).send('Email o contraseña incorrectos'); // Respuesta para contraseñas incorrectas
       }
