@@ -56,7 +56,7 @@ const LoginForm = () => {
             email: loginData.email,
             password: loginData.password,
           });
-          localStorage.setItem('username', res.data.email);
+          localStorage.setItem('username', loginData.email);
           alert(res.data)
           location.href = 'https://sites.google.com/view/qrentradadigital/'
         } catch (error) {
