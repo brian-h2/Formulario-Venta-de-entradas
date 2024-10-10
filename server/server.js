@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 const port = process.env.PORT ?? 5000;
 
-const connection = await mysql.createConnection(dbUrl);
+const connection = await mysql.createConnection(process.env.DATABASE_URL);
 
 
 app.get('/usuarios', async (req, res) => {
