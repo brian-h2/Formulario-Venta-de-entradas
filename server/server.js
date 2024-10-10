@@ -30,6 +30,10 @@ const config = {
 const connection = await mysql.createConnection(config);
 
 
+app.get('/', (req, res) => {
+  res.send('API RESTful - Formulario de Registro');
+})
+
 app.get('/usuarios', async (req, res) => {
   const query = 'SELECT * FROM users'
 
