@@ -58,6 +58,7 @@ const LoginForm = () => {
           });
           localStorage.setItem('username', res.data.email);
           alert(res.data)
+          location.href = 'https://sites.google.com/view/qrentradadigital/'
         } catch (error) {
           alert(error);
         }
