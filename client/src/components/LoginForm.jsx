@@ -48,21 +48,10 @@ const LoginForm = () => {
     }
     
     const redirectToGoogleSites = (email) => {
-      // Construir la URL con el email codificado
-      const googleAppsScriptUrl = `https://script.google.com/macros/s/AKfycbyCX8MPIDLam1Ew9c6K5eFqnFOeOD0zo5O_46kmgzLE39LjsUAiDssJf1txdPXPAGGe/exec?email=${encodeURIComponent(email)}`;
-      
-      // Hacer una solicitud GET a Google Apps Script con el email
-      fetch(googleAppsScriptUrl)
-        .then(response => response.text())
-        .then(data => {
-          console.log('Respuesta de Google Apps Script:', data);
-          // Aquí podrías redirigir al sitio de Google Sites
-          window.location.href = `https://sites.google.com/view/qrentradadigital/perfil?authuser=0&email=${encodeURIComponent(email)}`;
-        })
-        .catch(error => {
-          console.error('Error al enviar el email a Google Apps Script:', error);
-        });
-    };
+      // Cambia el orden de los parámetros
+      const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/perfil?email=${encodeURIComponent(email)}&authuser=0`;
+      window.location.href = googleSitesUrl; // Redirige a Google Sites
+  };
     
 
 
