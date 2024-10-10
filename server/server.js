@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/usuarios', async (req, res) => {
-  const query = 'SELECT * FROM Usuarios'
+  const query = 'SELECT * FROM UsuariosRegister'
 
   try {
     const result = await connection.query(query);
@@ -48,7 +48,7 @@ app.get('/usuarios', async (req, res) => {
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
 
-  const query = 'SELECT email, password FROM Usuarios WHERE email = ?';
+  const query = 'SELECT email, password FROM UsuariosRegister WHERE email = ?';
   const values = [email]; // Solo pasamos el email a la consulta
 
   try {
@@ -76,7 +76,7 @@ app.post('/register', async (req, res) => {
 
   const { email, password, name, username } = req.body;
 
-  const query = 'INSERT INTO Usuarios (email, password, nombre, username) VALUES (?,?,?,?)';
+  const query = 'INSERT INTO UsuariosRegister (email, password, nombre, username) VALUES (?,?,?,?)';
   const values = [email, password, name, username];
 
   console.log(req.body);
