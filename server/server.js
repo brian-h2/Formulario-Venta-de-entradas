@@ -51,6 +51,7 @@ app.get('/get-email', (req, res) => {
   } else {
     res.status(404).json({ email: null }); // Si no hay email guardado, devolver null
   }
+  
 });
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
