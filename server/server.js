@@ -3,6 +3,7 @@ import { corsMiddleware } from './middlewares/cors.js';
 import mysql from 'mysql2/promise';
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ const app = express();
 
 app.disable('x-powered-by');
 app.use(corsMiddleware());
-
+app.use(cors());
 app.use(bodyParser.json());
 
 const port = process.env.PORT ?? 5000;
@@ -51,7 +52,7 @@ app.get('/get-email', (req, res) => {
   } else {
     res.status(404).json({ email: null }); // Si no hay email guardado, devolver null
   }
-  
+
 });
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
