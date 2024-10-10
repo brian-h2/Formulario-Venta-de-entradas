@@ -51,7 +51,6 @@ app.post('/', async (req, res) => {
   const query = 'SELECT email, password FROM UsuariosRegister WHERE email = ?';
   const values = [email]; // Solo pasamos el email a la consulta
 
-  console.log(req.body)
 
   try {
     const [result] = await connection.query(query, values); // Ejecutamos la consulta

@@ -56,6 +56,7 @@ const LoginForm = () => {
             email: loginData.email,
             password: loginData.password,
           });
+          localStorage.setItem('username', res.data.email);
           alert(res.data)
         } catch (error) {
           alert(error);
