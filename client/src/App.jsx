@@ -1,4 +1,5 @@
 import './App.css'
+import User from './components/User';
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import {createBrowserRouter,RouterProvider,} from "react-router-dom";
@@ -13,6 +14,10 @@ function App() {
     {
       path: "/register",
       element: <RegisterPage />,
+    }, 
+    {
+      path: "/user",
+      element: <User />,
     }
   ])
 
