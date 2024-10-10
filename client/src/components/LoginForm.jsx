@@ -57,6 +57,10 @@ const LoginForm = () => {
             password: loginData.password,
           });
           localStorage.setItem('username', loginData.email);
+
+          await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/user', {
+            username: loginData.email,
+          });
           alert(res.data)
           location.href = 'https://sites.google.com/view/qrentradadigital/'
         } catch (error) {

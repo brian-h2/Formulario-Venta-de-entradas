@@ -33,15 +33,15 @@ app.get('/', (req, res) => {
   res.send('API RESTful - Formulario de Registro');
 })
 
-app.get('/user', async (req, res) => {
-  const usuario = localStorage.getItem('username')
+app.post('/user', async (req, res) => {
+  const { username } = req.body;
+
+  // Aquí puedes manejar el nombre de usuario como desees
+  console.log('Usuario recibido:', username);
   
-  if(usuario) {
-    res.json({ username: usuario })
-  } else {
-    res.status(401).send('No hay usuario logueado')
-  }
-}) 
+  // Por ejemplo, podrías guardarlo en la base de datos o simplemente responder
+  res.json({ message: `Hola, ${username}!` });
+});
 
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
