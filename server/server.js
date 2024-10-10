@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const dbUrl = process.env.DATABASE_URL;
 
 const app = express();
 
@@ -19,11 +18,15 @@ app.use(bodyParser.json());
 const port = process.env.PORT ?? 5000;
 
 const config = {
-  url: process.env.DB_URL,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
 };
 
 
-const connection = await mysql.createConnection(config);
+const connection = await mysql.createConnection(process.env.DB_URL);
 
 
 app.get('/', (req, res) => {
