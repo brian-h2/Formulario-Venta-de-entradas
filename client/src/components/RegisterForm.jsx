@@ -65,8 +65,7 @@ const RegisterForm = () => {
             name: formData.name,
             username: formData.username,
           });
-          setMessage(res.data);
-          alert(message)// Imprime la respuesta directamente
+          setMessage(res.data);// Imprime la respuesta directamente
         } catch (error) {
           alert(error); // Muestra el error completo para depuración
           setMessage(error.response ? error.response.data : "Error de conexión");

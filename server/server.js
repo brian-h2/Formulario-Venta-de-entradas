@@ -68,8 +68,6 @@ app.post('/register', async (req, res) => {
   const query = 'INSERT INTO UsuariosRegister (email, password, nombre, username) VALUES (?,?,?,?)';
   const values = [email, password, name, username];
 
-  console.log(req.body);
-
   try {
     await connection.query(query, values);
     res.status(201).send('Usuario creado exitosamente!');
