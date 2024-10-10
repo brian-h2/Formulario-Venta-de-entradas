@@ -18,13 +18,13 @@ app.use(bodyParser.json());
 
 const port = process.env.PORT ?? 5000;
 
-const config = {
-  host: 'localhost',
-  user: 'root',
-  port: 3306,
-  password: '',
-  database: 'appentradas'
-}
+// const config = {
+//   host: process.env.DB_HOST, // Cambia a tu variable de entorno para el host
+//   user: process.env.DB_USER, // Cambia a tu variable de entorno para el usuario
+//   password: process.env.DB_PASSWORD, // Cambia a tu variable de entorno para la contraseña
+//   database: process.env.DB_NAME, // Cambia a tu variable de entorno para el nombre de la base de datos
+//   port: process.env.DB_PORT,
+// }
 
 const connection = await mysql.createConnection(dbUrl);
 
