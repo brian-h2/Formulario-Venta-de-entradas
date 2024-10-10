@@ -51,7 +51,8 @@ const LoginForm = () => {
       const email = localStorage.getItem('username'); // Obtiene el email del localStorage
       if (email) {
         // Pasa el email a Google Sites en la URL
-        const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/perfil?authuser=0&email=${encodeURIComponent(email)}`;
+        const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/perfil?email=${encodeURIComponent(email)}`;
+
         location.href = googleSitesUrl; // Redirige a Google Sites con el email en la URL
       } else {
         alert("No se encontró el email del usuario.");
