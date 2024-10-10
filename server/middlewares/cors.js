@@ -8,6 +8,8 @@ export const corsMiddleware = () => cors({
             "http://127.0.0.1:5173/",
             "http://localhost:5000/", 
             "http://localhost:5173/",
+            "https://formulario-venta-de-entradas.vercel.app",
+            
         ];
         
         // Aceptar solicitudes sin origen (como localhost)
