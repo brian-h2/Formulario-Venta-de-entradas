@@ -33,16 +33,25 @@ app.get('/', (req, res) => {
   res.send('API RESTful - Formulario de Registro');
 })
 
+let emailStore = null; // Inicializa emailStore como null
+
+// Endpoint para guardar el email
 app.post('/save-email', (req, res) => {
   const { email } = req.body;
-  emailStore = email; // Guardar el email en la variable
+  emailStore = email; // Guarda el email en la variable
+  console.log(`Email guardado: ${emailStore}`);
   res.status(200).send('Email guardado con éxito');
 });
 
+// Endpoint para obtener el email
 app.get('/get-email', (req, res) => {
-  res.status(200).json({ email: emailStore }); // Devolver el email guardado
+  console.log('Email solicitado:', emailStore);
+  if (emailStore) {
+    res.status(200).json({ email: emailStore }); // Devolver el email guardado
+  } else {
+    res.status(404).json({ email: null }); // Si no hay email guardado, devolver null
+  }
 });
-
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
 
