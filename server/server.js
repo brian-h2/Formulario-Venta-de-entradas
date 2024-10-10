@@ -2,7 +2,11 @@ import express from 'express';
 import { corsMiddleware } from './middlewares/cors.js';
 import mysql from 'mysql2/promise';
 import bodyParser from 'body-parser'
+import dotenv from 'dotenv';
 
+dotenv.config();
+
+const dbUrl = process.env.DATABASE_URL;
 
 const app = express();
 
@@ -22,9 +26,7 @@ const config = {
   database: 'appentradas'
 }
 
-const connection = await mysql.createConnection(config);
-
-
+const connection = await mysql.createConnection(dbUrl);
 
 
 app.get('/usuarios', async (req, res) => {
