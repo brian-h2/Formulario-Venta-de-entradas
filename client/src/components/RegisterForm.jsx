@@ -59,7 +59,7 @@ const RegisterForm = () => {
     const conexionApi = async () => {
       if (loginTrigger === true) {
         try {
-          const res = await axios.post('http://localhost:5000/register', {
+          const res = await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/register', {
             email: formData.email,
             password: formData.password,
             name: formData.name,
