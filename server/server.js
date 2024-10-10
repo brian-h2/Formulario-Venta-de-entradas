@@ -33,16 +33,6 @@ app.get('/', (req, res) => {
   res.send('API RESTful - Formulario de Registro');
 })
 
-app.post('/user', async (req, res) => {
-  const { username } = req.body;
-
-  // Aquí puedes manejar el nombre de usuario como desees
-  console.log('Usuario recibido:', username);
-  
-  // Por ejemplo, podrías guardarlo en la base de datos o simplemente responder
-  res.json({ message: `Hola, ${username}!` });
-});
-
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
 

@@ -47,6 +47,18 @@ const LoginForm = () => {
         setLoginData({...loginData, [name]: value })
     }
 
+    const redirectToGoogleSites = () => {
+      const email = localStorage.getItem('username'); // Obtiene el email del localStorage
+      if (email) {
+          const googleSitesUrl = `https://script.google.com/macros/s/AKfycbyCX8MPIDLam1Ew9c6K5eFqnFOeOD0zo5O_46kmgzLE39LjsUAiDssJf1txdPXPAGGe/exec?email=${encodeURIComponent(email)}`;
+          // Redirige a Google Sites
+          googleSitesUrl
+          location.href = `https://sites.google.com/view/qrentradadigital/perfil?authuser=0`
+      } else {
+          alert("No se encontró el email del usuario.");
+      }
+  };
+
 
   useEffect(() => {
     const conexionApi = async () => {
@@ -57,12 +69,9 @@ const LoginForm = () => {
             password: loginData.password,
           });
           localStorage.setItem('username', loginData.email);
-
-          await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/user', {
-            username: loginData.email,
-          });
           alert(res.data)
-          location.href = 'https://sites.google.com/view/qrentradadigital/'
+          redirectToGoogleSites()
+          // location.href = 'https://sites.google.com/view/qrentradadigital/'
         } catch (error) {
           alert(error);
         }
