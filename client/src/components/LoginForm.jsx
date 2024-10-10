@@ -72,7 +72,7 @@ const LoginForm = () => {
         
           alert(res.data)
 
-          redirectToGoogleSites(userEmail);
+          redirectToGoogleSites(loginData.email);
           // location.href = 'https://sites.google.com/view/qrentradadigital/'
         } catch (error) {
           alert(error);
