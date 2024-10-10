@@ -34,33 +34,13 @@ app.get('/', (req, res) => {
 })
 
 app.get('/user', async (req, res) => {
-  const email = req.query.email; 
-    
-  if (!email) {
-      return res.status(400).json({ message: "Se requiere un email" });
+  const usuario = localStorage.getItem('username')
+  
+  if(usuario) {
+    res.json({ username: usuario })
+  } else {
+    res.status(401).send('No hay usuario logueado')
   }
-
-  const query = 'SELECT username FROM UsuariosRegister WHERE email = ?'
-  const values = [email]; 
-
-  try {
-    const [result] = await connection.query(query, values); 
-    
-    if (!result[0]) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
-    } else {
-      res.status(200).json({ username: result[0].username }); 
-      if (name) {
-        res.status(200).json({ message: `Bienvenido ${name}` });
-      } else {
-        res.status(200).json({ message: 'Bienvenido' });
-      }
-    }
-
-    }catch (error) {
-      console.error('Error en la consulta:', error);
-      res.status(500).json({ data: 'Error en el servidor' }); 
-    }
 }) 
 
 app.post('/', async (req, res) => {
