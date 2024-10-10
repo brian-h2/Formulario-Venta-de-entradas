@@ -64,7 +64,7 @@ const LoginForm = () => {
             password: loginData.password,
           });
 
-          await axios.post('https://tu-api.com/save-email', {
+          await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
             email: loginData.email,
           });
 
