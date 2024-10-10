@@ -59,7 +59,7 @@ app.post('/', async (req, res) => {
       const user = result[0]; // Obtenemos el primer resultado
 
       // Comparar la contraseña almacenada con la ingresada
-      if (user.password === password && user.email === email) { // Aquí puedes usar bcrypt.compare en producción
+      if (user.password == password && user.email == email) { // Aquí puedes usar bcrypt.compare en producción
         res.status(200).send('Logueado correctamente'); // Cambié a 200 para indicar éxito
       } else {
         res.status(401).send('Email o contraseña incorrectos'); // Respuesta para contraseñas incorrectas
