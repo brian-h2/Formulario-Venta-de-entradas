@@ -46,18 +46,18 @@ const LoginForm = () => {
         const {name,value} = e.target
         setLoginData({...loginData, [name]: value })
     }
-
+    
     const redirectToGoogleSites = () => {
       const email = localStorage.getItem('username'); // Obtiene el email del localStorage
       if (email) {
-          const googleSitesUrl = `https://script.google.com/macros/s/AKfycbyCX8MPIDLam1Ew9c6K5eFqnFOeOD0zo5O_46kmgzLE39LjsUAiDssJf1txdPXPAGGe/exec?email=${encodeURIComponent(email)}`;
-          // Redirige a Google Sites
-          googleSitesUrl
-          location.href = `https://sites.google.com/view/qrentradadigital/perfil?authuser=0`
+        // Pasa el email a Google Sites en la URL
+        const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/perfil?authuser=0&email=${encodeURIComponent(email)}`;
+        location.href = googleSitesUrl; // Redirige a Google Sites con el email en la URL
       } else {
-          alert("No se encontró el email del usuario.");
+        alert("No se encontró el email del usuario.");
       }
-  };
+    };
+    
 
 
   useEffect(() => {
