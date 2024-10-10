@@ -1,5 +1,5 @@
 import express from 'express';
-import { corsMiddleware } from './middlewares/cors.js';
+// import { corsMiddleware } from './middlewares/cors.js';
 import mysql from 'mysql2/promise';
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv';
@@ -12,7 +12,7 @@ const app = express();
 
 
 app.disable('x-powered-by');
-app.use(corsMiddleware());
+// app.use(corsMiddleware());
 app.use(cors());
 app.use(bodyParser.json());
 
