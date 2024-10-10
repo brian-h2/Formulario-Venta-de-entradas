@@ -63,9 +63,16 @@ const LoginForm = () => {
             email: loginData.email,
             password: loginData.password,
           });
-          localStorage.setItem('username', loginData.email);
+
+          await axios.post('https://tu-api.com/save-email', {
+            email: loginData.email,
+          });
+
+    // Redirigir a Google Sites
+        
           alert(res.data)
-          redirectToGoogleSites(loginData.email)
+
+          redirectToGoogleSites(userEmail);
           // location.href = 'https://sites.google.com/view/qrentradadigital/'
         } catch (error) {
           alert(error);

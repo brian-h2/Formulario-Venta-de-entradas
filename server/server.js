@@ -33,6 +33,16 @@ app.get('/', (req, res) => {
   res.send('API RESTful - Formulario de Registro');
 })
 
+app.post('/save-email', (req, res) => {
+  const { email } = req.body;
+  emailStore = email; // Guardar el email en la variable
+  res.status(200).send('Email guardado con éxito');
+});
+
+app.get('/get-email', (req, res) => {
+  res.status(200).json({ email: emailStore }); // Devolver el email guardado
+});
+
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
 
