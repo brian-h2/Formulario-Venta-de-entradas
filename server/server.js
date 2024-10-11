@@ -1,15 +1,14 @@
 import express from 'express';
-// import { corsMiddleware } from './middlewares/cors.js';
 import mysql from 'mysql2/promise';
+import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcrypt';
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv';
 import cors from 'cors';
 
 dotenv.config();
 
-
 const app = express();
-
 
 app.disable('x-powered-by');
 app.use(cors());
@@ -61,7 +60,7 @@ app.post('/', async (req, res) => {
     return res.status(400).send('Todos los campos son obligatorios');
   }
 
-  const query = 'SELECT email, password FROM UsuariosRegister WHERE email = ?';
+  const query = 'SELECT email, password FROM usuarios WHERE email = ?';
   const values = [email]; // Solo pasamos el email a la consulta
 
   try {
@@ -98,22 +97,29 @@ app.post('/register', async (req, res) => {
     return res.status(400).send('Todos los campos son obligatorios');
   }
 
-  const query = 'INSERT INTO UsuariosRegister (email, password, nombre, username) VALUES (?,?,?,?)';
-  const values = [email, password, name, username];
+  const hashedPassword = await bcrypt.hash(password,10);
+
+  const userId = uuidv4();
+
+  const query = 'INSERT INTO usuarios (id,email, password, nombre, username) VALUES (?,?,?,?)';
+  const values = [userId, email, hashedPassword, name, username];
 
   try {
-    const connection = await pool.getConnection(); // Obtener una conexión del pool
+    
+    const connection = await pool.getConnection(); 
     await connection.query(query, values);
-    connection.release(); // Liberar la conexión al pool
+    connection.release(); 
     res.status(201).send('Usuario creado exitosamente!');
+
   } catch (error) {
-    console.error('Error al crear el usuario:', error); // Log del error
-    // Manejo de errores específicos
+    console.error('Error al crear el usuario:', error); 
+    
     if (error.code === 'ER_DUP_ENTRY') {
       return res.status(400).send('El correo electrónico o nombre de usuario ya está registrado');
     }
     console.log(error); //
     res.status(500).send('Error al crear el usuario');
+
   }
 });
 
