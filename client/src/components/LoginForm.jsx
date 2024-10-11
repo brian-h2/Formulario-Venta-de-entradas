@@ -66,7 +66,7 @@ const LoginForm = () => {
           await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
             email: loginData.email,
           });
-  
+          localStorage.setItem('username', loginData.email);
           alert('Logueado exitosamente');
   
           redirectToGoogleSites(loginData.email);

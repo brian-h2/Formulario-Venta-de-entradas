@@ -66,6 +66,7 @@ const RegisterForm = () => {
             username: formData.username,
           });
           setMessage(res.data);// Imprime la respuesta directamente
+          window.location.href = 'https://formulario-venta-de-entradas.vercel.app/'
         } catch (error) {
           alert(error); // Muestra el error completo para depuración
           setMessage(error.response? error.response.data : "Error de conexión"); // Muestra el error en caso de que la respuesta sea un objeto
