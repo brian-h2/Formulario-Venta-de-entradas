@@ -56,6 +56,12 @@ app.get('/get-email', (req, res) => {
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
 
+  if(!email || !password) {
+    res.status(400).send('Todos los campos son obligatorios');
+    return;
+  }
+
+
   const query = 'SELECT email, password FROM UsuariosRegister WHERE email = ?';
   const values = [email]; // Solo pasamos el email a la consulta
 
@@ -82,20 +88,32 @@ app.post('/', async (req, res) => {
 
 
 app.post('/register', async (req, res) => {
-
   const { email, password, name, username } = req.body;
+
+  if (!email || !password || !name || !username) {
+    return res.status(400).send('Todos los campos son obligatorios');
+  }
 
   const query = 'INSERT INTO UsuariosRegister (email, password, nombre, username) VALUES (?,?,?,?)';
   const values = [email, password, name, username];
 
   try {
+    // Verificar si la conexión está abierta
+    if (connection.state === 'disconnected') {
+      await connection.connect();
+    }
+
     await connection.query(query, values);
     res.status(201).send('Usuario creado exitosamente!');
   } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(400).send('El correo electrónico o nombre de usuario ya está registrado');
+    }
+    console.log('Error al crear el usuario:', error);
     res.status(500).send('Error al crear el usuario');
   }
+});
 
-})
 
 
 app.listen(port, () => {

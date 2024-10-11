@@ -54,34 +54,40 @@ const LoginForm = () => {
   };
     
 
-
   useEffect(() => {
     const conexionApi = async () => {
-      if(loginTrigger == true) {
+      if (loginTrigger) {
         try {
           const res = await axios.post('https://formulario-venta-de-entradas-production.up.railway.app', {
             email: loginData.email,
             password: loginData.password,
           });
-
+  
           await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
             email: loginData.email,
           });
-
-    // Redirigir a Google Sites
-        
-          alert(res.data)
-
+  
+          alert('Login successful!');
+  
           redirectToGoogleSites(loginData.email);
-          // location.href = 'https://sites.google.com/view/qrentradadigital/'
         } catch (error) {
-          alert(error);
+          if (error.response) {
+            console.log('Error response:', error.response.data);
+          } else if (error.request) {
+            console.log('No response received:', error.request);
+          } else {
+            console.log('Error setting up request:', error.message);
+          }
+          alert('Error logging in');
+        } finally {
+          setLoginTrigger(false);  // Se ejecuta siempre, incluso si hubo un error
         }
       }
-      setLoginTrigger(false);
-    }
+    };
+  
     conexionApi();
-  }, [loginTrigger,loginData]);
+  }, [loginTrigger, loginData]);
+  
 
 
   return (
