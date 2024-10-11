@@ -60,6 +60,7 @@ app.post('/', async (req, res) => {
     return res.status(400).send('Todos los campos son obligatorios');
   }
 
+
   const query = 'SELECT email, password FROM usuarios WHERE email = ?';
   const values = [email]; // Solo pasamos el email a la consulta
 
@@ -75,8 +76,10 @@ app.post('/', async (req, res) => {
 
     const user = result[0]; // Obtenemos el primer resultado
 
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
     // Comparar la contraseña almacenada con la ingresada
-    if (user.password === password) { // Aquí puedes usar bcrypt.compare en producción
+    if (isPasswordValid) { // Aquí puedes usar bcrypt.compare en producción
       return res.status(200).send('Logueado correctamente');
     } else {
       return res.status(401).send('Email o contraseña incorrectos'); // Respuesta para contraseñas incorrectas
@@ -105,7 +108,7 @@ app.post('/register', async (req, res) => {
   const values = [userId, email, hashedPassword, name, username];
 
   try {
-    
+
     const connection = await pool.getConnection(); 
     await connection.query(query, values);
     connection.release(); 
