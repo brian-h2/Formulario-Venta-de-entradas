@@ -51,6 +51,7 @@ const LoginForm = () => {
       // Cambia el orden de los parámetros
       const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?email=${encodeURIComponent(email)}&authuser=0`;
       window.location.href = googleSitesUrl; // Redirige a Google Sites
+      
   };
     
 
