@@ -102,8 +102,8 @@ app.post('/register', async (req, res) => {
 
   const userId = uuidv4();
 
-  const query = 'INSERT INTO usuarios (id,email, password, nombre, usuario) VALUES (?,?,?,?)';
-  const values = [userId, email, hashedPassword, name, username];
+  const query = 'INSERT INTO usuarios (id,nombre, usuario, email, password) VALUES (?,?,?,?)';
+  const values = [userId, name, username, email, hashedPassword];
 
   try {
 
