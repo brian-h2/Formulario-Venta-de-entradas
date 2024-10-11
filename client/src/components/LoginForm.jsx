@@ -49,7 +49,7 @@ const LoginForm = () => {
     
     const redirectToGoogleSites = (email) => {
       // Cambia el orden de los parámetros
-      const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/perfil?email=${encodeURIComponent(email)}&authuser=0`;
+      const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?email=${encodeURIComponent(email)}&authuser=0`;
       window.location.href = googleSitesUrl; // Redirige a Google Sites
   };
     
@@ -67,7 +67,7 @@ const LoginForm = () => {
             email: loginData.email,
           });
   
-          alert('Login successful!');
+          alert('Logueado exitosamente');
   
           redirectToGoogleSites(loginData.email);
         } catch (error) {
