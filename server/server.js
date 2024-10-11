@@ -17,16 +17,17 @@ app.use(bodyParser.json());
 
 const port = process.env.PORT ?? 5000;
 
-const config = {
+
+const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-};
-
-
-const connection = await mysql.createConnection(process.env.DB_URL);
+  port: process.env.DB_PORT, // Agrega el puerto
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
 
 
 app.get('/', (req, res) => {
@@ -67,8 +68,9 @@ app.post('/', async (req, res) => {
 
 
   try {
+    const connection = await pool.getConnection(); // Obtener una conexión del pool
     const [result] = await connection.query(query, values); // Ejecutamos la consulta
-
+    connection.release();
       const user = result[0]; // Obtenemos el primer resultado
 
       // Comparar la contraseña almacenada con la ingresada
@@ -86,7 +88,6 @@ app.post('/', async (req, res) => {
 
 
 
-
 app.post('/register', async (req, res) => {
   const { email, password, name, username } = req.body;
 
@@ -98,18 +99,16 @@ app.post('/register', async (req, res) => {
   const values = [email, password, name, username];
 
   try {
-    // Verificar si la conexión está abierta
-    if (connection.state === 'disconnected') {
-      await connection.connect();
-    }
-
+    const connection = await pool.getConnection(); // Obtener una conexión del pool
     await connection.query(query, values);
+    connection.release(); // Liberar la conexión al pool
     res.status(201).send('Usuario creado exitosamente!');
   } catch (error) {
+    console.error('Error al crear el usuario:', error); // Log del error
+    // Manejo de errores específicos
     if (error.code === 'ER_DUP_ENTRY') {
       return res.status(400).send('El correo electrónico o nombre de usuario ya está registrado');
     }
-    console.log('Error al crear el usuario:', error);
     res.status(500).send('Error al crear el usuario');
   }
 });
