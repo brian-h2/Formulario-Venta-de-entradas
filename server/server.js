@@ -112,7 +112,7 @@ app.post('/register', async (req, res) => {
     if (error.code === 'ER_DUP_ENTRY') {
       return res.status(400).send('El correo electrónico o nombre de usuario ya está registrado');
     }
-    res.status(500).send('Error al crear el usuario');
+    res.status(500).send('Error al crear el usuario',error);
   }
 });
 
