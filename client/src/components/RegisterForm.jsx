@@ -68,7 +68,8 @@ const RegisterForm = () => {
           setMessage(res.data);// Imprime la respuesta directamente
         } catch (error) {
           alert(error); // Muestra el error completo para depuración
-          setMessage(error.response ? error.response.data : "Error de conexión");
+          setMessage(error.response? error.response.data : "Error de conexión"); // Muestra el error en caso de que la respuesta sea un objeto
+          
         }
       }
       setLoginTrigger(false);
