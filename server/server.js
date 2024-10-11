@@ -57,32 +57,35 @@ app.get('/get-email', (req, res) => {
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
 
-  if(!email || !password) {
-    res.status(400).send('Todos los campos son obligatorios');
-    return;
+  if (!email || !password) {
+    return res.status(400).send('Todos los campos son obligatorios');
   }
-
 
   const query = 'SELECT email, password FROM UsuariosRegister WHERE email = ?';
   const values = [email]; // Solo pasamos el email a la consulta
 
-
   try {
     const connection = await pool.getConnection(); // Obtener una conexión del pool
     const [result] = await connection.query(query, values); // Ejecutamos la consulta
-    connection.release();
-      const user = result[0]; // Obtenemos el primer resultado
+    connection.release(); // Liberar la conexión al pool
 
-      // Comparar la contraseña almacenada con la ingresada
-      if (user.password == password && user.email == email) { // Aquí puedes usar bcrypt.compare en producción
-        res.status(200).send('Logueado correctamente'); 
-      } else {
-        res.status(401).send('Email o contraseña incorrectos'); // Respuesta para contraseñas incorrectas
-      }
-  
+    // Verifica si se encontró algún usuario
+    if (result.length === 0) {
+      return res.status(401).send('Email o contraseña incorrectos'); // Usuario no encontrado
+    }
+
+    const user = result[0]; // Obtenemos el primer resultado
+
+    // Comparar la contraseña almacenada con la ingresada
+    if (user.password === password) { // Aquí puedes usar bcrypt.compare en producción
+      return res.status(200).send('Logueado correctamente');
+    } else {
+      return res.status(401).send('Email o contraseña incorrectos'); // Respuesta para contraseñas incorrectas
+    }
+
   } catch (error) {
     console.error('Error en la consulta:', error); // Agrega logging para errores
-    res.status(500).json({ data: 'Error en el servidor' }); // Respuesta en caso de error
+    return res.status(500).json({ data: 'Error en el servidor' }); // Respuesta en caso de error
   }
 });
 
