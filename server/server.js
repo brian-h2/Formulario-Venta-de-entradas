@@ -62,32 +62,30 @@ app.post('/', async (req, res) => {
 
 
   const query = 'SELECT email, password FROM usuarios WHERE email = ?';
-  const values = [email]; // Solo pasamos el email a la consulta
+  const values = [email]; 
 
   try {
     const connection = await pool.getConnection(); // Obtener una conexión del pool
-    const [result] = await connection.query(query, values); // Ejecutamos la consulta
-    connection.release(); // Liberar la conexión al pool
+    const [result] = await connection.query(query, values); 
+    connection.release(); 
 
-    // Verifica si se encontró algún usuario
     if (result.length === 0) {
-      return res.status(401).send('Email o contraseña incorrectos'); // Usuario no encontrado
+      return res.status(401).send('Email o contraseña incorrectos'); 
     }
 
-    const user = result[0]; // Obtenemos el primer resultado
+    const user = result[0]; 
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    // Comparar la contraseña almacenada con la ingresada
-    if (isPasswordValid) { // Aquí puedes usar bcrypt.compare en producción
+    if (isPasswordValid) { 
       return res.status(200).send('Logueado correctamente');
     } else {
-      return res.status(401).send('Email o contraseña incorrectos'); // Respuesta para contraseñas incorrectas
+      return res.status(401).send('Email o contraseña incorrectos');
     }
 
   } catch (error) {
-    console.error('Error en la consulta:', error); // Agrega logging para errores
-    return res.status(500).json({ data: 'Error en el servidor' }); // Respuesta en caso de error
+    console.error('Error en la consulta:', error); 
+    return res.status(500).json({ data: 'Error en el servidor' }); 
   }
 });
 
@@ -104,7 +102,7 @@ app.post('/register', async (req, res) => {
 
   const userId = uuidv4();
 
-  const query = 'INSERT INTO usuarios (id,email, password, nombre, username) VALUES (?,?,?,?)';
+  const query = 'INSERT INTO usuarios (id,email, password, nombre, usuario) VALUES (?,?,?,?)';
   const values = [userId, email, hashedPassword, name, username];
 
   try {
