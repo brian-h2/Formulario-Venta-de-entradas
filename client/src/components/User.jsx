@@ -12,7 +12,7 @@ const UserPage = () => {
   const fetchUsername = async () => {
     try {
       // Asegúrate de incluir el email en tu solicitud si es necesario
-      const response = await fetch(`https://formulario-venta-de-entradas-production.up.railway.app/user?email=${email}`);
+      const response = await fetch(`https://formulario-venta-de-entradas.vercel.app/user?email=${email}`);
       if (response.ok) {
         const data = await response.json();
         setUsername(data.username);

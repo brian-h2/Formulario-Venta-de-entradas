@@ -48,7 +48,7 @@ const LoginForm = () => {
     }
     
     const redirectToGoogleSites = async (email) => {
-      const apiUrl = `https://formulario-venta-de-entradas-production.up.railway.app/user?email=${encodeURIComponent(email)}&authuser=0`;
+      const apiUrl = `https://formulario-venta-de-entradas.vercel.app/user?email=${encodeURIComponent(email)}&authuser=0`;
       const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?email=${encodeURIComponent(email)}&authuser=0`;
     
       try {
