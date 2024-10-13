@@ -66,7 +66,7 @@ const LoginForm = () => {
       }
     
       // Redirigir a Google Sites después de llamar a la API
-      window.location.href = googleSitesUrl;
+      
     };
     
     

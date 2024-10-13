@@ -15,6 +15,7 @@ const UserPage = () => {
       const response = await fetch(`https://formulario-venta-de-entradas.vercel.app/user?email=${email}`);
       if (response.ok) {
         const data = await response.json();
+        console.log(data)
         setUsername(data.username);
       } else {
         console.error('Error al obtener el nombre de usuario');
