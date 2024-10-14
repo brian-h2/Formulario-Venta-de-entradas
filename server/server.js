@@ -44,13 +44,34 @@ app.post('/save-email', (req, res) => {
 });
 
 // Endpoint para obtener el email
-app.get('/get-email', (req, res) => {
-  console.log('Email solicitado:', emailStore);
-  if (emailStore) {
-    res.status(200).json({ email: emailStore }); // Devolver el email guardado
-  } else {
-    res.status(404).json({ email: null }); // Si no hay email guardado, devolver null
+app.get('/get-email', async (req, res) => {
+
+  const query = 'SELECT nombre,usuario,email,telefono FROM usuarios WHERE email = ?';
+
+  try {
+    
+    const connection = await pool.getConnection();
+    const [result] = await connection.query(query,[emailStore]);
+    connection.release(); 
+
+    
+    if (result.length === 0) {
+      return res.status(401).send('Usuario no encontrado'); 
+    }
+
+    const user = result[0];
+
+    res.status(200).json({ 
+      nombre: user.nombre, 
+      email: user.email, 
+      telefono: user.telefono 
+    });
+
+  } catch (error) {
+    console.error('Error en la consulta:', error); 
+    return res.status(500).json({ data: 'Error en el servidor' }); 
   }
+
 
 });
 app.post('/', async (req, res) => {

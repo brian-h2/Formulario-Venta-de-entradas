@@ -33,7 +33,7 @@ const User = () => {
     <div className="flex flex-col w-full mx-auto max-w-lg h-screen justify-center items-center">
       <ul className="space-y-4 text-lg bg-purple-700 text-white p-6 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-6">
-          Bienvenido, {username ? username : 'Invitado'}
+          Bienvenido {username ? username : 'Invitado'}
         </h1>
         <li className="flex items-center space-x-2">
           <span className="font-medium">Email:</span>
