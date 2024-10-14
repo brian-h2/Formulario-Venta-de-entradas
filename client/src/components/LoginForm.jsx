@@ -131,7 +131,7 @@ const LoginForm = () => {
 
 
   return (
-    <form className='space-y-4 mb-5 h-full'>
+    <form action="/" className='space-y-4 mb-5 h-full' method="POST">
         <img src="/register/email.svg" alt="email" className='w-10 absolute pt-6 py-1 px-2' />
         <input
          className='shadow appearance-none border rounded w-full py-2 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'

@@ -109,7 +109,7 @@ const RegisterForm = () => {
   }, [loginTrigger, formData]);
   
   return (
-      <form onSubmit={handleSubmit} className='space-y-4 mb-10 h-full'>
+      <form action='/register' onSubmit={handleSubmit} method="POST" className='space-y-4 mb-10 h-full'>
         <InputField
           img = '/register/user.svg'
           type="text"
@@ -135,7 +135,7 @@ const RegisterForm = () => {
           placeHolder="Correo electrónico"
         />
         <InputField
-          img = '/register/user.svg'
+          img = '/register/telephone.svg'
           type="telephone"
           name="telefono"
           value={formData.telefono}
