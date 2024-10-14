@@ -6,11 +6,11 @@ const User = () => {
   useEffect(() => {
     const fetchUsername = async () => {
       // Obtener el email almacenado
-      const email = localStorage.getItem('userEmail'); // O de donde estés almacenando el email
+      const email = localStorage.getItem('username'); // O de donde estés almacenando el email
       
       if (email) {
         try {
-          const response = await fetch(`https://formulario-venta-de-entradas-production.up.railway.app/get-username?email=${encodeURIComponent(email)}`);
+          const response = await fetch(`https://formulario-venta-de-entradas-production.up.railway.app/get-email?email=${encodeURIComponent(email)}`);
           if (response.ok) {
             const data = await response.json();
             setUsername(data.username || 'Invitado'); // Asegúrate de que la respuesta contenga el nombre
