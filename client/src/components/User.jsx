@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
 const User = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
-    // Extraer el email de los parámetros de la URL
-    const queryParams = new URLSearchParams(window.location.search);
-    const emailFromUrl = queryParams.get('email');
+    // Aquí haces la llamada a tu API o backend para obtener el nombre de usuario
+    const fetchUsername = async () => {
+      try {
+        const response = await fetch('https://formulario-venta-de-entradas-production.up.railway.app/get-email'); 
+        if (response.ok) {
+          const data = await response.json();
+          setUsername(data.username); // Asigna el nombre de usuario recibido
+        } else {
+          console.error('Error al obtener el nombre de usuario');
+        }
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+      }
+    };
 
-    if (emailFromUrl) {
-      setEmail(emailFromUrl);
-    } else {
-      console.error('Email no encontrado en la URL');
-    }
+    fetchUsername();
   }, []);
 
   return (
     <div>
-      <h1>Bienvenido, {email ? email : 'Invitado'}</h1>
+      <h1>Bienvenido, {username ? username : 'Invitado'}</h1>
     </div>
   );
 }
