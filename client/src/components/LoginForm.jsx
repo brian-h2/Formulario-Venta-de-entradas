@@ -24,7 +24,7 @@ const LoginForm = () => {
       } else {
           validation.error.errors.forEach(err => {
               Swal.fire({
-                title: 'Error!',
+                title: 'Error en el login',
                 text: err.message,
                 color: "#2B0A52",
                 position: 'top',
@@ -54,8 +54,24 @@ const LoginForm = () => {
       window.location.href = googleSitesUrl;
       
     };
-    
-    
+
+    const errorAlert = (errorMessage) => {
+      console.log(errorMessage);
+      Swal.fire({
+        title: 'Error',
+        text: errorMessage.data,
+        color: "#2B0A52",
+        position: 'top',
+        timer: 2500,
+        timerProgressBar: true,
+        icon: 'error',
+        confirmButtonText: 'OK',
+        confirmButtonColor: "#2B0A52",
+        background: 'white',
+        width: '20rem',
+      })
+    }
+  
     
 
   useEffect(() => {
@@ -69,20 +85,40 @@ const LoginForm = () => {
   
           await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
             email: loginData.email,
+
           });
-          localStorage.setItem('username', loginData.email);
-          alert('Logueado exitosamente');
-        
-          redirectToGoogleSites(loginData.email);
+
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top",
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Inicio de sesion exitoso"
+            
+          }).then((result) => {
+            if(result.dismiss === Swal.DismissReason.timer) {
+              redirectToGoogleSites(loginData.email);
+            }
+          })
+         
         } catch (error) {
+
           if (error.response) {
-            console.log('Error response:', error.response.data);
+            errorAlert(error.response);
           } else if (error.request) {
-            console.log('No response received:', error.request);
+            errorAlert(error.request);
           } else {
-            console.log('Error setting up request:', error.message);
+            errorAlert(error.message);
           }
-          alert('Error logging in');
+          errorAlert()
         } finally {
           setLoginTrigger(false);  // Se ejecuta siempre, incluso si hubo un error
         }

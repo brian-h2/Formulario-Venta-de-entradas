@@ -34,7 +34,23 @@ const RegisterForm = () => {
     }
     let validation = zodConfirmation(formData)
     if(validation.success) {
-      alert('Registro exitoso')
+      Swal.fire({
+        title: 'Registro exitoso',
+        text: 'Sera enviado al inicio de sesion',
+        color: "#2B0A52",
+        position: 'top',
+        timer: 1500,
+        timerProgressBar: true,
+        icon: 'sucess',
+        confirmButtonText: 'OK',
+        confirmButtonColor: "#2B0A52",
+        background: 'white',
+        width: '20rem',
+      }).then((result) => {
+        if(result.dismiss === Swal.DismissReason.timer) {
+          window.location.href = 'https://formulario-venta-de-entradas.vercel.app/'
+        }
+      })
       setLoginTrigger(true);
     } else {
         validation.error.errors.forEach(err => {
@@ -68,9 +84,20 @@ const RegisterForm = () => {
             telephone: formData.telefono,
           });
           setMessage(res.data);// Imprime la respuesta directamente
-          window.location.href = 'https://formulario-venta-de-entradas.vercel.app/'
         } catch (error) {
-          alert(error); // Muestra el error completo para depuración
+          Swal.fire({
+            title: 'Error en el registro',
+            text: error,
+            color: "#2B0A52",
+            position: 'top',
+            timer: 2500,
+            timerProgressBar: true,
+            icon: 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: "#2B0A52",
+            background: 'white',
+            width: '20rem',
+          }) // Muestra el error completo para depuración
           setMessage(error.response? error.response.data : "Error de conexión"); // Muestra el error en caso de que la respuesta sea un objeto
           
         }
