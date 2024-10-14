@@ -4,18 +4,24 @@ const User = () => {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    // Aquí haces la llamada a tu API o backend para obtener el nombre de usuario
     const fetchUsername = async () => {
-      try {
-        const response = await fetch('https://formulario-venta-de-entradas-production.up.railway.app/get-email'); 
-        if (response.ok) {
-          const data = await response.json();
-          setUsername(data.username); // Asigna el nombre de usuario recibido
-        } else {
-          console.error('Error al obtener el nombre de usuario');
+      // Obtener el email almacenado
+      const email = localStorage.getItem('userEmail'); // O de donde estés almacenando el email
+      
+      if (email) {
+        try {
+          const response = await fetch(`https://formulario-venta-de-entradas-production.up.railway.app/get-username?email=${encodeURIComponent(email)}`);
+          if (response.ok) {
+            const data = await response.json();
+            setUsername(data.username || 'Invitado'); // Asegúrate de que la respuesta contenga el nombre
+          } else {
+            console.error('Error al obtener el nombre de usuario');
+          }
+        } catch (error) {
+          console.error('Error en la solicitud:', error);
         }
-      } catch (error) {
-        console.error('Error en la solicitud:', error);
+      } else {
+        setUsername('Invitado'); // Si no hay email almacenado
       }
     };
 

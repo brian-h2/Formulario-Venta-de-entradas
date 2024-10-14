@@ -50,7 +50,7 @@ const LoginForm = () => {
     const redirectToGoogleSites = async (email) => {
       const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?email=${encodeURIComponent(email)}&authuser=0`;
     
-       
+      localStorage.setItem('username', email);
       window.location.href = googleSitesUrl;
       
     };
