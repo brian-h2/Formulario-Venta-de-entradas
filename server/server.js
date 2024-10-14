@@ -113,9 +113,9 @@ app.post('/', async (req, res) => {
 
 
 app.post('/register', async (req, res) => {
-  const { email, password, name, username } = req.body;
+  const { email, password, name, username,telephone } = req.body;
 
-  if (!email || !password || !name || !username) {
+  if (!email || !password || !name || !username || !telephone) {
     return res.status(400).send('Todos los campos son obligatorios');
   }
 
@@ -123,8 +123,8 @@ app.post('/register', async (req, res) => {
 
   const userId = uuidv4();
 
-  const query = 'INSERT INTO usuarios (id,nombre, usuario, email, password) VALUES (?,?,?,?,?)';
-  const values = [userId, name, username, email, hashedPassword];
+  const query = 'INSERT INTO usuarios (id,nombre, usuario, email, password, telefono) VALUES (?,?,?,?,?,?)';
+  const values = [userId, name, username, email, hashedPassword,telephone];
 
   try {
 

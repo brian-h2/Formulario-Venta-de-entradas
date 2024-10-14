@@ -14,6 +14,7 @@ const RegisterForm = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    telefono: '',
   })
 
   const [loginTrigger, setLoginTrigger] = useState(false);
@@ -64,6 +65,7 @@ const RegisterForm = () => {
             password: formData.password,
             name: formData.name,
             username: formData.username,
+            telephone: formData.telefono,
           });
           setMessage(res.data);// Imprime la respuesta directamente
           window.location.href = 'https://formulario-venta-de-entradas.vercel.app/'
@@ -104,6 +106,14 @@ const RegisterForm = () => {
           value={formData.email}
           onChange={handleChange}
           placeHolder="Correo electrónico"
+        />
+        <InputField
+          img = '/register/user.svg'
+          type="telephone"
+          name="telefono"
+          value={formData.telefono}
+          onChange={handleChange}
+          placeHolder="Telefono"
         />
         <InputField
           img = '/register/password.svg'
