@@ -52,21 +52,17 @@ const LoginForm = () => {
       const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?email=${encodeURIComponent(email)}&authuser=0`;
     
       try {
-        // Hacer la solicitud a la API
+        // Envía el email a tu API de Vercel antes de redirigir
         const response = await fetch(apiUrl);
-        if (response.ok) {
-          // Puedes manejar la respuesta si es necesario
-          const data = await response.json();
-          console.log('Respuesta de la API:', data);
-        } else {
-          console.error('Error al llamar a la API');
+        if (!response.ok) {
+          throw new Error('Error al enviar el email a Vercel');
         }
+        
+        // Después de que la solicitud se complete, rediriges a Google Sites
+        window.location.href = googleSitesUrl;
       } catch (error) {
-        console.error('Error en la solicitud:', error);
+        console.error('Error al enviar el email a Vercel:', error);
       }
-    
-      // Redirigir a Google Sites después de llamar a la API
-      
     };
     
     
