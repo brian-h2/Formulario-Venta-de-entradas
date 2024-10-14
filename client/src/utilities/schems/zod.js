@@ -17,6 +17,9 @@ const zodConfirmation = (formData) => {
         confirmPassword: z.string()
             .min(8, 'La contraseña debe tener al menos 8 caracteres')
             .max(15, 'No exceda los 15 caracteres en la contraseña'),
+        telefono: z.string()
+            .min(5, 'Numero de telefono invalido')
+            .max(15, 'Numero de telefono invalido'),
     });
 
     const result = schema.partial().safeParse(formData);
