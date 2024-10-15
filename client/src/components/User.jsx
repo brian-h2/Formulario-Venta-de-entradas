@@ -9,8 +9,7 @@ const User = () => {
     const asyncDates = async () => {
       try {
         // Obtener el token de la URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token'); // Captura el token de la URL
+        const token = localStorage.getItem('token')
 
         const emailUrl = 'https://formulario-venta-de-entradas-production.up.railway.app/get-email';
 
@@ -25,6 +24,9 @@ const User = () => {
         }
 
         const data = await response.json();
+
+        console.log(data)
+
         setEmail(data.email);
         setTelephone(data.telefono);
         setUsername(data.nombre);

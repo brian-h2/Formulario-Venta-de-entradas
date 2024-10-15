@@ -39,46 +39,50 @@ app.get('/', (req, res) => {
 let emailStore = null; // Inicializa emailStore como null
 
 // Endpoint para guardar el email
+// Endpoint para guardar el email
 app.post('/save-email', (req, res) => {
-  const { email,token } = req.body;
-  emailStore = {email: email, token: token}; // Guarda el email en la variable
-  console.log(`Email guardado: ${emailStore.email, emailStore.token}`);
-  res.status(200).send('Email guardado con éxito').json({emailStore})
+  const { email, token } = req.body;
+
+  if (!email || !token) {
+    return res.status(400).json({ error: 'Email y token son requeridos.' });
+  }
+
+  emailStore = { email: email, token: token }; // Guarda el email en la variable
+  console.log(`Email guardado: ${emailStore.email}`);
+  res.status(200).json({ message: 'Email guardado con éxito', emailStore }); // Cambia send por json
 });
+
 
 
 // Endpoint para obtener el email
 app.get('/get-email', authenticateJWT, async (req, res) => {
-
-  const query = 'SELECT nombre,usuario,email,telefono FROM usuarios WHERE email = ?';
+  const query = 'SELECT nombre, usuario, email, telefono FROM usuarios WHERE email = ?';
 
   try {
-    
     const connection = await pool.getConnection();
-    const [result] = await connection.query(query,[emailStore.email]);
-    connection.release(); 
+    console.log(emailStore)
+    const [result] = await connection.query(query, [emailStore.email]);
+    connection.release();
 
-    
     if (result.length === 0) {
-      return res.status(401).send('Usuario no encontrado'); 
+      return res.status(404).json({ error: 'Usuario no encontrado' }); // Cambia el status a 404
     }
 
     const user = result[0];
 
-    res.status(200).json({ 
+    res.status(200).json({
       token: emailStore.token,
-      nombre: user.nombre, 
-      email: user.email, 
-      telefono: user.telefono 
+      nombre: user.nombre,
+      email: user.email,
+      telefono: user.telefono,
     });
-
   } catch (error) {
-    console.error('Error en la consulta:', error); 
-    return res.status(500).json({ data: 'Error en el servidor' }); 
+    console.error('Error en la consulta:', error);
+    return res.status(500).json({ error: 'Error en el servidor' });
   }
-
-
 });
+
+
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
 

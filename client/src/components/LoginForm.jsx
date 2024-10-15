@@ -88,9 +88,6 @@ const LoginForm = () => {
             token: res.data.token,
           });
 
-
-
-
           const Toast = Swal.mixin({
             toast: true,
             position: "top",
@@ -106,10 +103,10 @@ const LoginForm = () => {
             icon: "success",
             title: "Inicio de sesion exitoso"
             
-          }).then((result) => {
-            if(result.dismiss === Swal.DismissReason.timer) {
-              redirectToGoogleSites(loginData.email,res.data.token);
-            }
+          // }).then((result) => {
+          //   if(result.dismiss === Swal.DismissReason.timer) {
+          //     redirectToGoogleSites(loginData.email,res.data.token);
+          //   }
           })
          
         } catch (error) {
