@@ -83,11 +83,11 @@ const LoginForm = () => {
   
           await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
             email: loginData.email,
-
+            token: res.data.token,
           });
 
           localStorage.setItem('token', res.data.token)
-          
+
 
           const Toast = Swal.mixin({
             toast: true,

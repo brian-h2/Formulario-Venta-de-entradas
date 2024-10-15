@@ -40,8 +40,8 @@ let emailStore = null; // Inicializa emailStore como null
 
 // Endpoint para guardar el email
 app.post('/save-email', (req, res) => {
-  const { email } = req.body;
-  emailStore = email; // Guarda el email en la variable
+  const { email,token } = req.body;
+  emailStore = {email: email, token: token}; // Guarda el email en la variable
   console.log(`Email guardado: ${emailStore}`);
   res.status(200).send('Email guardado con éxito');
 });
@@ -55,7 +55,7 @@ app.get('/get-email', authenticateJWT, async (req, res) => {
   try {
     
     const connection = await pool.getConnection();
-    const [result] = await connection.query(query,[emailStore]);
+    const [result] = await connection.query(query,[emailStore.email]);
     connection.release(); 
 
     
@@ -66,6 +66,7 @@ app.get('/get-email', authenticateJWT, async (req, res) => {
     const user = result[0];
 
     res.status(200).json({ 
+      token: emailStore.token,
       nombre: user.nombre, 
       email: user.email, 
       telefono: user.telefono 
