@@ -47,8 +47,10 @@ const LoginForm = () => {
         setLoginData({...loginData, [name]: value })
     }
     
-    const redirectToGoogleSites = async (email) => {
+    const redirectToGoogleSites = async (email,token) => {
       const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?email=${encodeURIComponent(email)}&authuser=0`;
+      const url2 = `https://sites.google.com/view/qrentradadigital/perfil?token=${token}`
+      url2
       window.location.href = googleSitesUrl;
       
     };
@@ -86,7 +88,7 @@ const LoginForm = () => {
             token: res.data.token,
           });
 
-          localStorage.setItem('token', res.data.token)
+
 
 
           const Toast = Swal.mixin({
@@ -106,7 +108,7 @@ const LoginForm = () => {
             
           }).then((result) => {
             if(result.dismiss === Swal.DismissReason.timer) {
-              redirectToGoogleSites(loginData.email);
+              redirectToGoogleSites(loginData.email,res.data.token);
             }
           })
          

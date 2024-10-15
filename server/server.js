@@ -42,8 +42,8 @@ let emailStore = null; // Inicializa emailStore como null
 app.post('/save-email', (req, res) => {
   const { email,token } = req.body;
   emailStore = {email: email, token: token}; // Guarda el email en la variable
-  console.log(`Email guardado: ${emailStore}`);
-  res.status(200).send('Email guardado con éxito');
+  console.log(`Email guardado: ${emailStore.email, emailStore.token}`);
+  res.status(200).send('Email guardado con éxito').json({emailStore})
 });
 
 
