@@ -10,10 +10,19 @@ const User = () => {
     const asyncDates = async () => {
 
       try {
-      
+        const token = localStorage.getItem('token');
         const emailUrl = 'https://formulario-venta-de-entradas-production.up.railway.app/get-email'
   
-        const response = await fetch(emailUrl);
+        const response = await fetch(emailUrl, {
+          headers: {
+            'Authorization': `Bearer ${token}` // Agrega el token aquí
+          }
+        });
+
+        if(!response.ok) {
+          throw new Error('Error al obtener los datos');
+        }
+
         const data = await response.json();
 
         setEmail(data.email);

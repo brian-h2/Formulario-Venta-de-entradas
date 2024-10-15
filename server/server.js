@@ -5,6 +5,8 @@ import bcrypt from 'bcrypt';
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv';
 import cors from 'cors';
+import jwt from 'jsonwebtoken';
+import {authenticateJWT} from './middlewares/authenticate.js';
 
 dotenv.config();
 
@@ -15,6 +17,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const port = process.env.PORT ?? 5000;
+
+const jwt_secret = process.env.JWT_SECRET;
 
 
 const pool = mysql.createPool({
@@ -27,7 +31,6 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0
 });
-
 
 app.get('/', (req, res) => {
   res.send('API RESTful - Formulario de Registro');
@@ -43,8 +46,9 @@ app.post('/save-email', (req, res) => {
   res.status(200).send('Email guardado con éxito');
 });
 
+
 // Endpoint para obtener el email
-app.get('/get-email', async (req, res) => {
+app.get('/get-email', authenticateJWT, async (req, res) => {
 
   const query = 'SELECT nombre,usuario,email,telefono FROM usuarios WHERE email = ?';
 
@@ -82,7 +86,7 @@ app.post('/', async (req, res) => {
   }
 
 
-  const query = 'SELECT email, password FROM usuarios WHERE email = ?';
+  const query = 'SELECT id, email, password, nombre  FROM usuarios WHERE email = ?';
   const values = [email]; 
 
   try {
@@ -99,7 +103,8 @@ app.post('/', async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) { 
-      return res.status(200).send('Logueado correctamente');
+      const token = jwt.sign({id: user.id, email: user.email }, jwt_secret, { expiresIn: '1h' });
+      return res.status(200).json({ token, message: 'Logueado correctamente' });
     } else {
       return res.status(401).send('Email o contraseña incorrectos');
     }

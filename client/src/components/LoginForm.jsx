@@ -86,6 +86,9 @@ const LoginForm = () => {
 
           });
 
+          localStorage.setItem('token', res.data.token)
+          
+
           const Toast = Swal.mixin({
             toast: true,
             position: "top",
