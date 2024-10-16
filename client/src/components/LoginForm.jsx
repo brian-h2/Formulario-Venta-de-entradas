@@ -59,7 +59,7 @@ const LoginForm = () => {
       console.log(errorMessage);
       Swal.fire({
         title: 'Error',
-        text: errorMessage.data,
+        text: errorMessage,
         color: "#2B0A52",
         position: 'top',
         timer: 2500,
@@ -85,7 +85,6 @@ const LoginForm = () => {
   
           await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
             email: loginData.email,
-            token: res.data.token,
           });
 
           const Toast = Swal.mixin({
@@ -108,6 +107,7 @@ const LoginForm = () => {
           //     redirectToGoogleSites(loginData.email,res.data.token);
           //   }
           })
+          window.location.href =  'http://localhost:5173/user'
          
         } catch (error) {
 

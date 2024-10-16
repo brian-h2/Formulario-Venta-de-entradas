@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import {authenticateJWT} from './middlewares/authenticate.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const app = express();
 
 app.disable('x-powered-by');
 app.use(cors());
+app.use(cookieParser());
 app.use(bodyParser.json());
 
 const port = process.env.PORT ?? 5000;
@@ -41,13 +43,12 @@ let emailStore = null; // Inicializa emailStore como null
 // Endpoint para guardar el email
 // Endpoint para guardar el email
 app.post('/save-email', (req, res) => {
-  const { email, token } = req.body;
-
-  if (!email || !token) {
+  const { email} = req.body;
+  if (!email) {
     return res.status(400).json({ error: 'Email y token son requeridos.' });
   }
 
-  emailStore = { email: email, token: token }; // Guarda el email en la variable
+  emailStore = { email: email}; // Guarda el email en la variable
   console.log(`Email guardado: ${emailStore.email}`);
   res.status(200).json({ message: 'Email guardado con éxito', emailStore }); // Cambia send por json
 });
@@ -71,7 +72,6 @@ app.get('/get-email', authenticateJWT, async (req, res) => {
     const user = result[0];
 
     res.status(200).json({
-      token: emailStore.token,
       nombre: user.nombre,
       email: user.email,
       telefono: user.telefono,
@@ -109,7 +109,9 @@ app.post('/', async (req, res) => {
 
     if (isPasswordValid) { 
       const token = jwt.sign({id: user.id, email: user.email }, jwt_secret, { expiresIn: '1h' });
-      return res.status(200).json({ token, message: 'Logueado correctamente' });
+      res.cookie('acces_token', token, { httpOnly: true, maxAge: 60 * 60 * 1000 }); 
+      console.log(token,user)
+      return res.send({ token,user});
     } else {
       return res.status(401).send('Email o contraseña incorrectos');
     }

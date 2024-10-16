@@ -8,16 +8,13 @@ const User = () => {
   useEffect(() => {
     const asyncDates = async () => {
       try {
-        // Obtener el token de la URL
-        const token = localStorage.getItem('token')
 
         const emailUrl = 'https://formulario-venta-de-entradas-production.up.railway.app/get-email';
 
-        const response = await fetch(emailUrl, {
-          headers: {
-            'Authorization': `Bearer ${token}` // Agrega el token aquí
-          }
-        });
+        const response = await fetch(emailUrl)
+  
+
+        console.log(response);
 
         if (!response.ok) {
           throw new Error('Error al obtener los datos');
@@ -38,7 +35,7 @@ const User = () => {
 
     asyncDates();
 
-  }, []); // Asegúrate de que el array de dependencias esté vacío para ejecutar una sola vez
+  }, []);
 
   return (
     <div className="flex flex-col w-full mx-auto max-w-lg h-screen justify-center items-center">
