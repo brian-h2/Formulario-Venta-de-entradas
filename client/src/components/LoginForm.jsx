@@ -56,7 +56,6 @@ const LoginForm = () => {
     };
 
     const errorAlert = (errorMessage) => {
-      console.log(errorMessage);
       Swal.fire({
         title: 'Error',
         text: errorMessage,
@@ -83,9 +82,11 @@ const LoginForm = () => {
             password: loginData.password,
           });
   
-          await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
-            email: loginData.email,
-          });
+          // await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
+          //   email: loginData.email,
+          // });
+
+          console.log(res)
 
           const Toast = Swal.mixin({
             toast: true,
@@ -107,7 +108,7 @@ const LoginForm = () => {
           //     redirectToGoogleSites(loginData.email,res.data.token);
           //   }
           })
-          window.location.href =  'http://localhost:5173/user'
+          
          
         } catch (error) {
 

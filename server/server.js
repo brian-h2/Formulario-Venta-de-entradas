@@ -34,10 +34,6 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-app.get('/', (req, res) => {
-  res.send('API RESTful - Formulario de Registro');
-})
-
 let emailStore = null; // Inicializa emailStore como null
 
 // Endpoint para guardar el email
@@ -103,15 +99,21 @@ app.post('/', async (req, res) => {
       return res.status(401).send('Email o contraseña incorrectos'); 
     }
 
-    const user = result[0]; 
+    const user = result[0];
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
+    console.log('hola')
+
     if (isPasswordValid) { 
       const token = jwt.sign({id: user.id, email: user.email }, jwt_secret, { expiresIn: '1h' });
-      res.cookie('acces_token', token, { httpOnly: true, maxAge: 60 * 60 * 1000 }); 
-      console.log(token,user)
-      return res.send({ token,user});
+      
+      res.cookie('access_token', token, { 
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60, // Expira en 1 hora
+        secure: false, // Si estás usando HTTPS (en producción)
+      })
+      console.log(res.cookie)
     } else {
       return res.status(401).send('Email o contraseña incorrectos');
     }
