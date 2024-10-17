@@ -2,6 +2,7 @@
     "rewrites": [
       { "source": "/user", "destination": "/index.html" },
       { "source": "/register", "destination": "/index.html" },
+      { "source": "/proxy/get-email", "destination": "/index.html" },
       { "source": "/", "destination": "/index.html" },
       { "source": "/(.*)", "destination": "/index.html" }
     ]

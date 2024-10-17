@@ -55,8 +55,16 @@ const pool = mysql.createPool({
 
 let emailStore = null; // Inicializa emailStore como null
 
-// Endpoint para guardar el email
-// Endpoint para guardar el email
+
+app.get('/proxy/get-email', async (req, res) => {
+  try {
+    const response = await axios.get('https://formulario-venta-de-entradas-production.up.railway.app/get-email');
+    res.json(response.data); // Envía la respuesta al cliente
+  } catch (error) {
+    res.status(500).send('Error al obtener los datos');
+  }
+});
+
 app.post('/save-email', (req, res) => {
   const { email} = req.body;
   if (!email) {
