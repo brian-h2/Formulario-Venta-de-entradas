@@ -14,7 +14,23 @@ dotenv.config();
 const app = express();
 
 app.disable('x-powered-by');
-app.use(cors());
+app.use(cors({
+  origin: (origin, callback) => {
+    const acceptedOrigins = [
+      "http://localhost:5173", // Cambia este puerto si es necesario
+      "http://127.0.0.1:5173",
+      "http://localhost:5000/",
+      "https://formulario-venta-de-entradas.vercel.app",
+      "https://formulario-venta-de-entradas.vercel.app/",
+      "https://sites.google.com" // Permitir acceso desde Google Sites
+    ];
+    if (acceptedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('El origen no está permitido.'), false);
+    }
+  }
+}));
 app.use(cookieParser());
 app.use(bodyParser.json());
 

@@ -77,13 +77,22 @@ const LoginForm = () => {
     const conexionApi = async () => {
       if (loginTrigger) {
         try {
-          const res = await axios.post('https://formulario-venta-de-entradas-production.up.railway.app', {
-            params: {
+          const res = await axios.post(
+            'https://formulario-venta-de-entradas-production.up.railway.app', 
+            {
               email: loginData.email,
               password: loginData.password,
-            },
-            withCredentials: true,
-          });
+            }, 
+            {
+              withCredentials: true,  // Permite que las cookies se manejen
+              headers: {
+                'Content-Type': 'application/json',  // Asegura que envíes JSON
+              },
+            }
+          );
+          
+          
+          
   
           // await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
           //   email: loginData.email,
