@@ -22,14 +22,16 @@ app.use(cors({
       "http://localhost:5000/",
       "https://formulario-venta-de-entradas.vercel.app",
       "https://formulario-venta-de-entradas.vercel.app/",
-      "https://sites.google.com" // Permitir acceso desde Google Sites
+      "https://sites.google.com" 
     ];
+
     if (acceptedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('El origen no está permitido.'), false);
     }
-  }
+  },
+  credentials: true,
 }));
 app.use(cookieParser());
 app.use(bodyParser.json());
