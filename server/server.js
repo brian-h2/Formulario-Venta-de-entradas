@@ -130,7 +130,6 @@ app.post('/', async (req, res) => {
         secure: process.env.NODE_ENV === 'production', // Si estás usando HTTPS (en producción)
         SameSite: 'None', 
       })
-      console.log('Token generado:', token);
       res.status(200).json({ message: 'Login exitoso' });
     } else {
       return res.status(401).send('Email o contraseña incorrectos');
