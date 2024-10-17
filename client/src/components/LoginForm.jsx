@@ -78,8 +78,11 @@ const LoginForm = () => {
       if (loginTrigger) {
         try {
           const res = await axios.post('https://formulario-venta-de-entradas-production.up.railway.app', {
-            email: loginData.email,
-            password: loginData.password,
+            params: {
+              email: loginData.email,
+              password: loginData.password,
+            },
+            withCredentials: true,
           });
   
           // await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {

@@ -103,17 +103,17 @@ app.post('/', async (req, res) => {
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    console.log('hola')
-
     if (isPasswordValid) { 
       const token = jwt.sign({id: user.id, email: user.email }, jwt_secret, { expiresIn: '1h' });
       
       res.cookie('access_token', token, { 
         httpOnly: true,
         maxAge: 1000 * 60 * 60, // Expira en 1 hora
-        secure: false, // Si estás usando HTTPS (en producción)
+        secure: process.env.NODE_ENV === 'production', // Si estás usando HTTPS (en producción)
+        SameSite: 'None', 
       })
-      console.log(res.cookie)
+      console.log('Token generado:', token);
+      res.status(200).json({ message: 'Login exitoso' });
     } else {
       return res.status(401).send('Email o contraseña incorrectos');
     }
