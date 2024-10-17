@@ -22,6 +22,7 @@ app.use(cors({
       "http://localhost:5000/",
       "https://formulario-venta-de-entradas.vercel.app",
       "https://formulario-venta-de-entradas.vercel.app/",
+      "https://845863178-atari-embeds.googleusercontent.com/",
       "https://sites.google.com" 
     ];
 

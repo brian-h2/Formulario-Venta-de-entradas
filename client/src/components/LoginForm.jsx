@@ -49,8 +49,6 @@ const LoginForm = () => {
     
     const redirectToGoogleSites = async (email,token) => {
       const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?email=${encodeURIComponent(email)}&authuser=0`;
-      const url2 = `https://sites.google.com/view/qrentradadigital/perfil?token=${token}`
-      url2
       window.location.href = googleSitesUrl;
       
     };
@@ -92,13 +90,9 @@ const LoginForm = () => {
           );
           
           
-          
-  
-          // await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
-          //   email: loginData.email,
-          // });
-
-          console.log(res)
+          await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
+            email: loginData.email,
+          });
 
           const Toast = Swal.mixin({
             toast: true,
@@ -115,10 +109,10 @@ const LoginForm = () => {
             icon: "success",
             title: "Inicio de sesion exitoso"
             
-          // }).then((result) => {
-          //   if(result.dismiss === Swal.DismissReason.timer) {
-          //     redirectToGoogleSites(loginData.email,res.data.token);
-          //   }
+          }).then((result) => {
+            if(result.dismiss === Swal.DismissReason.timer) {
+              redirectToGoogleSites(loginData.email,res.data.token);
+            }
           })
           
          
