@@ -23,7 +23,8 @@ app.use(cors({
       "https://formulario-venta-de-entradas.vercel.app",
       "https://formulario-venta-de-entradas.vercel.app/",
       "https://845863178-atari-embeds.googleusercontent.com/",
-      "https://sites.google.com" 
+      "https://sites.google.com",
+      "http://localhost:5000"
     ];
 
     if (acceptedOrigins.includes(origin)) {
