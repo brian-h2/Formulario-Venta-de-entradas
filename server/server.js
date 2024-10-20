@@ -19,12 +19,11 @@ app.use(cors({
     const acceptedOrigins = [
       "http://localhost:5173", // Cambia este puerto si es necesario
       "http://127.0.0.1:5173",
-      "http://localhost:5000/",
+      "http://localhost:5000",
       "https://formulario-venta-de-entradas.vercel.app",
       "https://formulario-venta-de-entradas.vercel.app/",
       "https://845863178-atari-embeds.googleusercontent.com/",
       "https://sites.google.com",
-      "http://localhost:5000"
     ];
 
     if (acceptedOrigins.includes(origin)) {
@@ -33,6 +32,8 @@ app.use(cors({
       callback(new Error('El origen no está permitido.'), false);
     }
   },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'] ,
   credentials: true,
 }));
 app.use(cookieParser());
