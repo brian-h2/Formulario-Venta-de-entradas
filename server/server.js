@@ -58,8 +58,6 @@ const pool = mysql.createPool({
 let emailStore = null; // Inicializa emailStore como null
 
 
-const axios = require('axios');
-
 // Endpoint protegido para obtener el email a través del proxy
 app.get('/proxy/get-email', authenticateJWT, async (req, res) => {
   try {
