@@ -48,8 +48,15 @@ const LoginForm = () => {
     }
     
     const redirectToGoogleSites = (email, token) => {
-      const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas/?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
-      window.location.href = googleSitesUrl;
+      if (email && token) {
+        const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas/?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
+        console.log(googleSitesUrl)
+        console.log(token,"email: " + email)
+        // window.location.href = googleSitesUrl;  // Redirige al usuario
+      } else {
+        console.error('Email o token no están definidos:', { email, token });
+      }
+      
     };
 
     const errorAlert = (errorMessage) => {
@@ -117,7 +124,7 @@ const LoginForm = () => {
             // Redirigir después de que el Toast se cierre
             setTimeout(() => {
               redirectToGoogleSites(loginData.email, res.data.token);
-            }, 1000);  // Espera a que el Toast se cierre antes de redirigir
+            }, 3000);  // Espera a que el Toast se cierre antes de redirigir
     
           } catch (error) {
             // Manejo de errores
