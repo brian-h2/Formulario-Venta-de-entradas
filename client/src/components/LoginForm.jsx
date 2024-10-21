@@ -48,7 +48,7 @@ const LoginForm = () => {
     }
     
     const redirectToGoogleSites = (email, token) => {
-      const googleSitesUrl = `https://tusitio.google.com/?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
+      const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas/?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
       window.location.href = googleSitesUrl;
     };
 
