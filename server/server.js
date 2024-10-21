@@ -58,21 +58,24 @@ const pool = mysql.createPool({
 let emailStore = null; // Inicializa emailStore como null
 
 
-app.get('/proxy/get-email', async (req, res) => {
+const axios = require('axios');
+
+// Endpoint protegido para obtener el email a través del proxy
+app.get('/proxy/get-email', authenticateJWT, async (req, res) => {
   try {
-    const response = await axios.get(
-      'https://formulario-venta-de-entradas-production.up.railway.app/get-email',
-      {
-        headers: {
-          Authorization: `Bearer ${req.cookies.access_token}`,  // Asumiendo que tienes el token almacenado en cookies
-        },
+    // Puedes usar req.user para obtener la información del token
+    const response = await axios.get('https://formulario-venta-de-entradas-production.up.railway.app/get-email', {
+      headers: {
+        'Authorization': `Bearer ${req.cookies?.access_token || req.headers.authorization?.split(' ')[1]}`
       }
-    );
-    res.json(response.data);
+    });
+    res.json(response.data);  // Envía la respuesta al cliente
   } catch (error) {
+    console.error('Error al obtener los datos del proxy:', error);
     res.status(500).send('Error al obtener los datos');
   }
 });
+
 
 
 app.post('/save-email', (req, res) => {
@@ -94,12 +97,11 @@ app.get('/get-email', authenticateJWT, async (req, res) => {
 
   try {
     const connection = await pool.getConnection();
-    console.log(emailStore)
-    const [result] = await connection.query(query, [emailStore.email]);
+    const [result] = await connection.query(query, [req.user.email]);  // Utiliza req.user.email
     connection.release();
 
     if (result.length === 0) {
-      return res.status(404).json({ error: 'Usuario no encontrado' }); // Cambia el status a 404
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
     const user = result[0];
@@ -114,6 +116,7 @@ app.get('/get-email', authenticateJWT, async (req, res) => {
     return res.status(500).json({ error: 'Error en el servidor' });
   }
 });
+
 
 
 app.post('/', async (req, res) => {

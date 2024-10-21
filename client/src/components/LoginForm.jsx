@@ -47,10 +47,9 @@ const LoginForm = () => {
         setLoginData({...loginData, [name]: value })
     }
     
-    const redirectToGoogleSites = async (email,token) => {
-      const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?email=${encodeURIComponent(email)}&authuser=0`;
+    const redirectToGoogleSites = (email, token) => {
+      const googleSitesUrl = `https://tusitio.google.com/?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
       window.location.href = googleSitesUrl;
-      
     };
 
     const errorAlert = (errorMessage) => {
@@ -71,70 +70,74 @@ const LoginForm = () => {
   
     
 
-  useEffect(() => {
-    const conexionApi = async () => {
-      if (loginTrigger) {
-        try {
-          const res = await axios.post(
-            'https://formulario-venta-de-entradas-production.up.railway.app', 
-            {
+    useEffect(() => {
+      const conexionApi = async () => {
+        if (loginTrigger) {
+          try {
+            // Hacer la solicitud de inicio de sesión
+            const res = await axios.post(
+              'https://formulario-venta-de-entradas-production.up.railway.app', 
+              {
+                email: loginData.email,
+                password: loginData.password,
+              }, 
+              {
+                withCredentials: true,  // Permite que las cookies se manejen
+                headers: {
+                  'Content-Type': 'application/json',  // Asegura que envíes JSON
+                },
+              }
+            );
+    
+            console.log(res);
+    
+            // Hacer la solicitud para guardar el email
+            await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
               email: loginData.email,
-              password: loginData.password,
-            }, 
-            {
-              withCredentials: true,  // Permite que las cookies se manejen
-              headers: {
-                'Content-Type': 'application/json',  // Asegura que envíes JSON
-              },
+            });
+    
+            // Mostrar el Toast de éxito
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top",
+              showConfirmButton: false,
+              timer: 1000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+    
+            Toast.fire({
+              icon: "success",
+              title: "Inicio de sesión exitoso"
+            });
+    
+            // Redirigir después de que el Toast se cierre
+            setTimeout(() => {
+              redirectToGoogleSites(loginData.email, res.data.token);
+            }, 1000);  // Espera a que el Toast se cierre antes de redirigir
+    
+          } catch (error) {
+            // Manejo de errores
+            if (error.response) {
+              errorAlert(error.response);
+            } else if (error.request) {
+              errorAlert(error.request);
+            } else {
+              errorAlert(error.message);
             }
-          );
-          
-          
-          await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
-            email: loginData.email,
-          });
-
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top",
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
-            icon: "success",
-            title: "Inicio de sesion exitoso"
-          })
-          // }).then((result) => {
-          //   if(result.dismiss === Swal.DismissReason.timer) {
-          //     redirectToGoogleSites(loginData.email,res.data.token);
-          //   }
-          // })
-          
-          
-         
-        } catch (error) {
-
-          if (error.response) {
-            errorAlert(error.response);
-          } else if (error.request) {
-            errorAlert(error.request);
-          } else {
-            errorAlert(error.message);
+          } finally {
+            setLoginTrigger(false);  // Se ejecuta siempre, incluso si hubo un error
           }
-          errorAlert()
-        } finally {
-          setLoginTrigger(false);  // Se ejecuta siempre, incluso si hubo un error
         }
-      }
-    };
+      };
+    
+      conexionApi();
+    }, [loginTrigger, loginData]);
   
-    conexionApi();
-  }, [loginTrigger, loginData]);
+    
   
 
 
