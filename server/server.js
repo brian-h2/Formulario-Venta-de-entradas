@@ -60,12 +60,20 @@ let emailStore = null; // Inicializa emailStore como null
 
 app.get('/proxy/get-email', async (req, res) => {
   try {
-    const response = await axios.get('https://formulario-venta-de-entradas-production.up.railway.app/get-email');
-    res.json(response.data); // Envía la respuesta al cliente
+    const response = await axios.get(
+      'https://formulario-venta-de-entradas-production.up.railway.app/get-email',
+      {
+        headers: {
+          Authorization: `Bearer ${req.cookies.access_token}`,  // Asumiendo que tienes el token almacenado en cookies
+        },
+      }
+    );
+    res.json(response.data);
   } catch (error) {
     res.status(500).send('Error al obtener los datos');
   }
 });
+
 
 app.post('/save-email', (req, res) => {
   const { email} = req.body;
@@ -141,7 +149,7 @@ app.post('/', async (req, res) => {
         secure: process.env.NODE_ENV === 'production', // Si estás usando HTTPS (en producción)
         SameSite: 'None', 
       })
-      res.status(200).json({ message: 'Login exitoso' });
+      res.status(200).json({ message: 'Login exitoso', token });
     } else {
       return res.status(401).send('Email o contraseña incorrectos');
     }
