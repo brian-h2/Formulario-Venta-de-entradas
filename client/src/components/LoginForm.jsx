@@ -49,13 +49,21 @@ const LoginForm = () => {
     
     const redirectToGoogleSites = (email, token) => {
       if (email && token) {
-        const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas/?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
-        window.location.href = googleSitesUrl;  // Redirige al usuario
+        // Configurar las cookies
+        document.cookie = `email=${encodeURIComponent(email)}; path=/; SameSite=None; Secure`;
+        document.cookie = `token=${encodeURIComponent(token)}; path=/; SameSite=None; Secure`;
+    
+        // Esperar un momento antes de redirigir para asegurarse de que las cookies se guarden
+        setTimeout(() => {
+          const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas`;
+          window.location.href = googleSitesUrl;
+        }, 500); // 500 ms de espera
       } else {
         console.error('Email o token no están definidos:', { email, token });
       }
-      
     };
+    
+    
 
     const errorAlert = (errorMessage) => {
       Swal.fire({
