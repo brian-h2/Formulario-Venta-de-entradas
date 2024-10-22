@@ -59,12 +59,13 @@ let emailStore = null; // Inicializa emailStore como null
 
 
 // Endpoint protegido para obtener el email a través del proxy
-app.get('/proxy/get-email', authenticateJWT, async (req, res) => {
+app.post('/proxy/get-email', async (req, res) => {
+  const { email, token } = req.body; // Recibir el email y el token
   try {
-    // Puedes usar req.user para obtener la información del token
+    // Aquí asegúrate de usar el token que recibes
     const response = await axios.get('https://formulario-venta-de-entradas-production.up.railway.app/get-email', {
       headers: {
-        'Authorization': `Bearer ${req.cookies?.access_token || req.headers.authorization?.split(' ')[1]}`
+        'Authorization': `Bearer ${token}` // Usa el token recibido
       }
     });
     res.json(response.data);  // Envía la respuesta al cliente
@@ -73,6 +74,7 @@ app.get('/proxy/get-email', authenticateJWT, async (req, res) => {
     res.status(500).send('Error al obtener los datos');
   }
 });
+
 
 
 
