@@ -48,27 +48,10 @@ const LoginForm = () => {
     }
     
     const redirectToGoogleSites = (email, token) => {
-      fetch('https://formulario-venta-de-entradas-production.up.railway.app/proxy/get-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, token }),
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error al almacenar la sesión');
-        }
-        return response.json();
-      })
-      .then(data => {
-        const sessionId = data.sessionId;
-        const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?sessionId=${sessionId}`;
-        window.location.href = googleSitesUrl; // Redirige al usuario
-      })
-      .catch(error => {
-        console.error('Error al redirigir:', error);
-      });
+      const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
+      window.location.href = googleSitesUrl; // Redirige al usuario
+      const sendValues = `https://formulario-venta-de-entradas.vercel.app/user/?token=${encodeURIComponent(token)}`;
+      sendValues;
     };
     
     
@@ -108,12 +91,14 @@ const LoginForm = () => {
                   'Content-Type': 'application/json',  // Asegura que envíes JSON
                 },
               }
-            );
-        
+            );        
             // Hacer la solicitud para guardar el email
             await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
               email: loginData.email,
+              token: res.data.token
             });
+
+
     
             // Mostrar el Toast de éxito
             const Toast = Swal.mixin({

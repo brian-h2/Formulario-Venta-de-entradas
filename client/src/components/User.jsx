@@ -1,63 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const User = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [telephone, setTelephone] = useState('');
+  const [userEmail, setUserEmail] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const asyncDates = async () => {
+    // Obtener los parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token'); // Obtener el token
+
+    // Función para obtener el email del usuario
+    const fetchUserEmail = async () => {
       try {
+        const response = await axios.get('https://formulario-venta-de-entradas-production.up.railway.app/get-email', {
+          headers: {
+            'Authorization': `Bearer ${token}`,  // Usa el token para autorización
+            'Content-Type': 'application/json',
+          },
+        });
 
-        const emailUrl = 'https://formulario-venta-de-entradas-production.up.railway.app/get-email';
-
-        const response = await fetch(emailUrl)
-  
-
-        console.log(response);
-
-        if (!response.ok) {
-          throw new Error('Error al obtener los datos');
-        }
-
-        const data = await response.json();
-
-        console.log(data)
-
-        setEmail(data.email);
-        setTelephone(data.telefono);
-        setUsername(data.nombre);
-
+        // Suponiendo que el email está en response.data.nombre
+        setUserEmail(response.data);
+        console.log(userEmail)
       } catch (error) {
-        alert('Error: ' + error.message);
+        console.error('Error al obtener el email:', error);
+        setError('Error al cargar el usuario.');
       }
     };
 
-    asyncDates();
-
-  }, []);
+    // Verifica si hay token antes de hacer la solicitud
+    if (token) {
+      fetchUserEmail();
+    } else {
+      setError('No se encontró la información de autenticación.');
+    }
+  }, []); // Dependencias vacías para que se ejecute solo una vez al montar
 
   return (
-    <div className="flex flex-col w-full mx-auto max-w-lg h-screen justify-center items-center">
-      <ul className="space-y-4 text-lg bg-purple-700 text-white p-6 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          Bienvenido {username ? username : 'Invitado'}
-        </h1>
-        <li className="flex items-center space-x-2">
-          <span className="font-medium">Email:</span>
-          <a className="text-purple-200">
-            {email ? email : 'Usuario'}
-          </a>
-        </li>
-        <li className="flex items-center space-x-2">
-          <span className="font-medium">Teléfono:</span>
-          <a className="text-purple-200">
-            {telephone ? telephone : 'N/A'}
-          </a>
-        </li>
-      </ul>
+    <div id="userEmail">
+      {error ? <p>{error}</p> : <p>{userEmail ? `Usuario: ${userEmail}` : 'Cargando...'}</p>}
     </div>
   );
-}
+};
 
 export default User;

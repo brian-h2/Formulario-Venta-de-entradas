@@ -79,13 +79,13 @@ app.post('/proxy/get-email', async (req, res) => {
 
 
 app.post('/save-email', (req, res) => {
-  const { email} = req.body;
-  if (!email) {
+  const { email, token} = req.body;
+  if (!email && !token) {
     return res.status(400).json({ error: 'Email y token son requeridos.' });
   }
 
-  emailStore = { email: email}; // Guarda el email en la variable
-  console.log(`Email guardado: ${emailStore.email}`);
+  emailStore = { email: email, token: token}; // Guarda el email en la variable
+  console.log(`Email guardado: ${emailStore.email, emailStore.token}`);
   res.status(200).json({ message: 'Email guardado con éxito', emailStore }); // Cambia send por json
 });
 
