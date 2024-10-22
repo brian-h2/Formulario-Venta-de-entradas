@@ -50,9 +50,7 @@ const LoginForm = () => {
     const redirectToGoogleSites = (email, token) => {
       if (email && token) {
         const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas/?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
-        console.log(googleSitesUrl)
-        console.log(token,"email: " + email)
-        // window.location.href = googleSitesUrl;  // Redirige al usuario
+        window.location.href = googleSitesUrl;  // Redirige al usuario
       } else {
         console.error('Email o token no están definidos:', { email, token });
       }
