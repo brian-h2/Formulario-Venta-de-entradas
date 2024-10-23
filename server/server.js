@@ -13,10 +13,6 @@ dotenv.config();
 
 const app = express();
 
-app.use(helmet({
-  frameguard: false,  // Esto deshabilita el encabezado X-Frame-Options
-}));
-
 app.disable('x-powered-by');
 app.use(cors({
   origin: (origin, callback) => {
