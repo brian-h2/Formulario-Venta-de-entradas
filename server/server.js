@@ -43,13 +43,15 @@ const pool = mysql.createPool({
 
 
 
-let valueToken = null
+let valueToken = null;
 
-app.post('/save-date', async (req,res) => {
+app.post('/save-date', (req,res) => {
   const { token } = req.body
   valueToken = token;
+  res.status(200).send('Token asignado exitosamente')
+});
 
-})
+
 app.get('/proxy/get-user', async (req, res) => {
 
   if (!valueToken) {
@@ -65,8 +67,15 @@ try {
       'Authorization': `Bearer ${valueToken}`,
     }
     });
-    // Devolver la respuesta al cliente
-    res.status(200).json(response.data);
+   
+    if(!response.ok) {
+      throw new Error('Error en la solicitud a get-email');
+    }
+
+    const userData = await response.json();
+
+    res.status(200).json(userData);
+
 } catch (error) {
     console.error('Error en la solicitud a get-email:', error);
     return res.status(500).json({ error: 'Error en el servidor al obtener el email' });
