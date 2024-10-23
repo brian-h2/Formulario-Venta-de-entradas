@@ -56,7 +56,7 @@ const pool = mysql.createPool({
 });
 
 
-
+let emailStore = null;
 
 app.post('/save-email', (req, res) => {
   const { email, token} = req.body;
