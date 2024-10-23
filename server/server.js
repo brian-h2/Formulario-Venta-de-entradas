@@ -14,22 +14,8 @@ dotenv.config();
 const app = express();
 
 app.disable('x-powered-by');
-app.use(cors({
-  origin: (origin, callback) => {
-    const acceptedOrigins = [
-      "*",
-    ];
+app.options('*', cors())
 
-    if (acceptedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('El origen no está permitido.'), false);
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
-  allowedHeaders: ['Content-Type', 'Authorization'] ,
-  credentials: true,
-}));
 app.use(cookieParser());
 app.use(bodyParser.json());
 
