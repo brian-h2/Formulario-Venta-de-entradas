@@ -7,7 +7,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import {authenticateJWT} from './middlewares/authenticate.js';
-import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -16,7 +15,6 @@ const app = express();
 app.disable('x-powered-by');
 app.options('*', cors())
 
-app.use(cookieParser());
 app.use(bodyParser.json());
 
 const port = process.env.PORT ?? 5000;
