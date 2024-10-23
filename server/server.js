@@ -13,7 +13,14 @@ dotenv.config();
 const app = express();
 
 app.disable('x-powered-by');
-app.use(cors())
+
+const corsOptions = {
+  origin: '*',  // Permitir solicitudes desde Vercel
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
