@@ -17,13 +17,7 @@ app.disable('x-powered-by');
 app.use(cors({
   origin: (origin, callback) => {
     const acceptedOrigins = [
-      "http://localhost:5173", // Cambia este puerto si es necesario
-      "http://127.0.0.1:5173",
-      "http://localhost:5000",
-      "https://formulario-venta-de-entradas.vercel.app",
-      "https://formulario-venta-de-entradas.vercel.app/",
-      "https://845863178-atari-embeds.googleusercontent.com/",
-      "https://sites.google.com",
+      "*",
     ];
 
     if (acceptedOrigins.includes(origin)) {
@@ -130,12 +124,6 @@ app.post('/', async (req, res) => {
     if (isPasswordValid) { 
       const token = jwt.sign({id: user.id, email: user.email }, jwt_secret, { expiresIn: '1h' });
       
-      res.cookie('access_token', token, { 
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60, // Expira en 1 hora
-        secure: process.env.NODE_ENV === 'production', // Si estás usando HTTPS (en producción)
-        SameSite: 'None', 
-      })
       res.status(200).json({ message: 'Login exitoso', token });
     } else {
       return res.status(401).send('Email o contraseña incorrectos');
