@@ -52,12 +52,12 @@ app.post('/proxy/get-user', async (req, res) => {
 
 try {
     // Hacer la solicitud al endpoint de get-email
-    const response = await axios.get('https://formulario-venta-de-entradas-production.up.railway.app/get-email', {
-        headers: {
-            'Authorization': `Bearer ${token}`, // Incluir el token en los encabezados
-        },
+    const response = await fetch('https://formulario-venta-de-entradas-production.up.railway.app/get-email', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }
     });
-
     // Devolver la respuesta al cliente
     res.status(200).json(response.data);
 } catch (error) {
