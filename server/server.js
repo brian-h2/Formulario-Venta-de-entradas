@@ -13,6 +13,15 @@ dotenv.config();
 
 const app = express();
 
+app.use(helmet({
+  frameguard: false,  // Esto deshabilita el encabezado X-Frame-Options
+}));
+
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', "frame-ancestors 'self' https://sites.google.com");
+  next();
+});
+
 app.disable('x-powered-by');
 app.use(cors({
   origin: (origin, callback) => {
