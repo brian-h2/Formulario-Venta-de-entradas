@@ -48,6 +48,7 @@ const LoginForm = () => {
     }
     
     const redirectToGoogleSites = ( token) => {
+      window.parent.postMessage(token, 'https://sites.google.com')
       const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?token=${token}`;
       window.location.href = googleSitesUrl; 
     };
