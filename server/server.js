@@ -43,11 +43,16 @@ const pool = mysql.createPool({
 
 
 
+let valueToken = null
 
+app.post('/save-date', async (req,res) => {
+  const { token } = req.body
+  valueToken = token;
 
-app.post('/proxy/get-user', async (req, res) => {
-  const {token} = req.body;
-  if (!token) {
+})
+app.get('/proxy/get-user', async (req, res) => {
+
+  if (!valueToken) {
     return res.status(400).send('Token requerido');
 }
 
@@ -57,6 +62,7 @@ try {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${valueToken}`,
     }
     });
     // Devolver la respuesta al cliente

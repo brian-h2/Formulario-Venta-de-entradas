@@ -93,7 +93,7 @@ const LoginForm = () => {
             
             
             
-            await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/proxy/get-user', {
+            await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-date', {
               token: res.data.token,
             });
 
