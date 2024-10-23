@@ -41,17 +41,29 @@ const pool = mysql.createPool({
 });
 
 
-let emailStore = null;
 
-app.post('/save-email', (req, res) => {
-  const { email, token} = req.body;
-  if (!email && !token) {
-    return res.status(400).json({ error: 'Email y token son requeridos.' });
-  }
 
-  emailStore = { email: email, token: token}; // Guarda el email en la variable
-  console.log(`Email guardado: ${emailStore.email, emailStore.token}`);
-  res.status(200).json({ message: 'Email guardado con éxito', emailStore }); // Cambia send por json
+
+app.post('/proxy/get-user', async (req, res) => {
+  const {token} = req.body;
+  if (!token) {
+    return res.status(400).send('Token requerido');
+}
+
+try {
+    // Hacer la solicitud al endpoint de get-email
+    const response = await axios.get('https://formulario-venta-de-entradas-production.up.railway.app/get-email', {
+        headers: {
+            'Authorization': `Bearer ${token}`, // Incluir el token en los encabezados
+        },
+    });
+
+    // Devolver la respuesta al cliente
+    res.status(200).json(response.data);
+} catch (error) {
+    console.error('Error en la solicitud a get-email:', error);
+    return res.status(500).json({ error: 'Error en el servidor al obtener el email' });
+}
 });
 
 

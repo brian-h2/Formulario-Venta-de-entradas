@@ -48,9 +48,7 @@ const LoginForm = () => {
     }
     
     const redirectToGoogleSites = ( token) => {
-      window.parent.postMessage(token, 'https://sites.google.com')
-      const googleSitesUrl = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?token=${token}`;
-      window.location.href = googleSitesUrl; 
+      window.location.href = `https://sites.google.com/view/qrentradadigital/carrito/mis-entradas?token=${token}`;
     };
     
     
@@ -95,10 +93,9 @@ const LoginForm = () => {
             
             
             
-            // await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/save-email', {
-            //   email: loginData.email,
-             
-            // });
+            await axios.post('https://formulario-venta-de-entradas-production.up.railway.app/proxy/get-user', {
+              token: res.data.token,
+            });
 
 
     
@@ -121,7 +118,7 @@ const LoginForm = () => {
             });
     
             setTimeout(() => {
-              redirectToGoogleSites(loginData.email, res.data.token);
+              redirectToGoogleSites( res.data.token);
             }, 1000);  // Espera a que el Toast se cierre antes de redirigir
     
           } catch (error) {
