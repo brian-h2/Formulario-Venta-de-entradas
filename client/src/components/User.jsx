@@ -9,6 +9,7 @@ const User = () => {
 
     fetch('https://formulario-venta-de-entradas-production.up.railway.app/get-email', {
       method: 'GET',
+      credentials: 'include',
       headers: {
         'Authorization': `Bearer ${token}`, // Enviamos el token en el header
       },
