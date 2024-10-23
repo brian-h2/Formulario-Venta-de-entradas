@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 
 app.disable('x-powered-by');
-app.options('*', cors())
+app.use(cors())
 
 app.use(bodyParser.json());
 
