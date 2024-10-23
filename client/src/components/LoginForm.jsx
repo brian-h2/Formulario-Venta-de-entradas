@@ -83,8 +83,7 @@ const LoginForm = () => {
                 email: loginData.email,
                 password: loginData.password,
               }, 
-              {
-                withCredentials: true,  // Permite que las cookies se manejen
+              { 
                 headers: {
                   'Content-Type': 'application/json',  // Asegura que envíes JSON
                 },
