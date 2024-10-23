@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import {authenticateJWT} from './middlewares/authenticate.js';
+import fetch from 'node-fetch';
 
 dotenv.config();
 
