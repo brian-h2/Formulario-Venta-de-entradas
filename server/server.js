@@ -55,26 +55,6 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-let emailStore = null; // Inicializa emailStore como null
-
-
-// Endpoint protegido para obtener el email a través del proxy
-app.post('/proxy/get-email', async (req, res) => {
-  const { email, token } = req.body; // Recibir el email y el token
-  try {
-    // Aquí asegúrate de usar el token que recibes
-    const response = await axios.get('https://formulario-venta-de-entradas-production.up.railway.app/get-email', {
-      headers: {
-        'Authorization': `Bearer ${token}` // Usa el token recibido
-      }
-    });
-    res.json(response.data);  // Envía la respuesta al cliente
-  } catch (error) {
-    console.error('Error al obtener los datos del proxy:', error);
-    res.status(500).send('Error al obtener los datos');
-  }
-});
-
 
 
 
@@ -91,13 +71,17 @@ app.post('/save-email', (req, res) => {
 
 
 
-// Endpoint para obtener el email
 app.get('/get-email', authenticateJWT, async (req, res) => {
+
+  const token = req.headers['authorization'].split(' ')[1];
+
+  if(!token) return res.status(403).send('Token Requerido');
+
   const query = 'SELECT nombre, usuario, email, telefono FROM usuarios WHERE email = ?';
 
   try {
     const connection = await pool.getConnection();
-    const [result] = await connection.query(query, [req.user.email]);  // Utiliza req.user.email
+    const [result] = await connection.query(query, [req.user.email]);  
     connection.release();
 
     if (result.length === 0) {
