@@ -1,5 +1,4 @@
 import express from 'express';
-import mysql from 'mysql2/promise';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 import bodyParser from 'body-parser'
@@ -7,7 +6,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import {authenticateJWT} from './middlewares/authenticate.js';
-import fetch from 'node-fetch';
+import { pool } from './config/dbconfig.js';
 
 dotenv.config();
 
@@ -28,20 +27,6 @@ app.use(bodyParser.json());
 const port = process.env.PORT ?? 5000;
 
 const jwt_secret = process.env.JWT_SECRET;
-
-
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT, // Agrega el puerto
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
-
-
 
 let valueToken = null;
 
@@ -104,6 +89,7 @@ app.get('/get-email', authenticateJWT, async (req, res) => {
 
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
+  const userAgent = req.headers['user-agent'];
 
   if (!email || !password) {
     return res.status(400).send('Todos los campos son obligatorios');
@@ -127,7 +113,12 @@ app.post('/', async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) { 
-      const token = jwt.sign({id: user.id, email: user.email }, jwt_secret, { expiresIn: '1h' });
+      const token = jwt.sign({id: user.id, email: user.email, userAgent }, jwt_secret, { expiresIn: '1h' });
+
+      await pool.query(
+        'INSERT INTO sesiones (user_id, token, user_agent) VALUES (?,?,?)',
+        [user.id,token,userAgent]
+      )
       
       res.status(200).json({ message: 'Login exitoso', token });
     } else {
