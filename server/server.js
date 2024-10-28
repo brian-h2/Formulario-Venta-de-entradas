@@ -113,6 +113,9 @@ app.post('/', async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) { 
+
+      await pool.query('DELETE FROM sesiones WHERE user_id = ?', [user.id])
+
       const token = jwt.sign({id: user.id, email: user.email, userAgent }, jwt_secret, { expiresIn: '1h' });
 
       await pool.query(
