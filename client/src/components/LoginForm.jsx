@@ -11,8 +11,6 @@ const LoginForm = () => {
         password: '',
     })
 
-    const [mensaje,setMensaje] = useState('')
-
     const [loginTrigger, setLoginTrigger] = useState(false)
 
 
@@ -148,7 +146,6 @@ const LoginForm = () => {
         <img src="/register/email.svg" alt="email" className='w-10 absolute pt-6 py-1 px-2' />
         <input
          className='shadow appearance-none border rounded w-full py-2 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-          img = '/register/email.svg'  
           id='email'
           type='email'
           name='email'

@@ -54,27 +54,13 @@ app.post('/save-date', (req,res) => {
 
 app.get('/proxy/get-user', async (req, res) => {
 
-  if (!valueToken) {
+if (!valueToken) {
     return res.status(400).send('Token requerido');
 }
 
 try {
-    // Hacer la solicitud al endpoint de get-email
-    const response = await fetch('https://formulario-venta-de-entradas-production.up.railway.app/get-email', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${valueToken}`,
-    }
-    });
-   
-    if(!response.ok) {
-      throw new Error('Error en la solicitud a get-email');
-    }
 
-    const userData = await response.json();
-
-    res.status(200).json(userData);
+    res.status(200).json(valueToken);
 
 } catch (error) {
     console.error('Error en la solicitud a get-email:', error);
